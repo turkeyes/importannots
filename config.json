@@ -4,7 +4,8 @@
         "description": "desc",
         "numSubtasks": 3,
         "disclaimer": "This is a disclaimer. You are participating in this experiment voluntarily.",
-        "aggregate": false
+        "aggregate": false,
+        "includeDemographicSurvey": true
     },
     "instructions": {
         "simple": "These are simple instructions for <b>4</b> tasks",

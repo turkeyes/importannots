@@ -14,6 +14,7 @@
     <script src="assets/lib/semantic/semantic.min.js"></script>
     <script src="assets/js/custom.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/demo_survey.js"></script>
 </head>
 
 <body>
@@ -46,15 +47,16 @@
             </div>
         </div>
         <!-- vv CUSTOM EXPERIMENT MARKUP GOES HERE vv -->
-        <div class="row">
+        <div class="row" id="custom-experiment">
             <h4 class="exp-data">Input data for task</h4>
             <div class="right aligned twelve wide column" id="exp">
                 <div class="ui input">
-                    <input id="exp-input">
+                <input id="exp-input">
                 </div>
             </div>
         </div>
         <!-- ^^ CUSTOM EXPERIMENT MARKUP GOES HERE ^^ -->
+        <div id="demo-survey" class ="ui top aligned centered grid"></div>
         <div class="middle aligned row">
             <div class="eight wide column">
                 <div id="message-field" class="field">
@@ -78,7 +80,7 @@
                         </label>
                         <textarea id="feedback-input" rows="2"></textarea>
                     </div>
-                    <div class="field">
+                    <div id="submit-field" class="field">
                         <div id="submit-button" class="ui green right floated button">Submit</div>
                     </div>
                 </div>

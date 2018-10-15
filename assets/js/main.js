@@ -13,11 +13,17 @@ var state = {
 
 /* HELPERS */
 function saveTaskData() {
-    if (config.meta.aggregate) {
-        var updates = custom.collectData(getTaskInputs(state.taskIndex), state.taskIndex, getTaskOutputs(state.taskIndex));
-        $.extend(state.taskOutputs, updates);
+    var data;
+    if (isDemoSurvey()) {
+        data = demoSurvey.collectData();
     } else {
-        state.taskOutputs[state.taskIndex] = custom.collectData(getTaskInputs(state.taskIndex), state.taskIndex, getTaskOutputs(state.taskIndex));
+        data = custom.collectData(getTaskInputs(state.taskIndex), state.taskIndex, getTaskOutputs(state.taskIndex));
+    }
+    if (config.meta.aggregate) {
+        $.extend(state.taskOutputs, data);
+    } else {
+        // TODO: figure out how best to include the demo survey data in the results
+        state.taskOutputs[state.taskIndex] = data;
     }
 }
 
@@ -30,9 +36,17 @@ function getTaskOutputs(i) {
 }
 
 function updateTask() {
-    custom.showTask(getTaskInputs(state.taskIndex), state.taskIndex, getTaskOutputs(state.taskIndex));
     $("#progress-bar").progress("set progress", state.taskIndex + 1);
-    if (state.taskIndex == config.meta.numSubtasks - 1) {
+    if (isDemoSurvey()) {
+        demoSurvey.showTask();
+    } else {
+        // show the user's task
+        demoSurvey.hideSurvey();
+        $('#custom-experiment').show();
+        custom.showTask(getTaskInputs(state.taskIndex), state.taskIndex, getTaskOutputs(state.taskIndex));
+    }
+    if (state.taskIndex == config.meta.numSubtasks + config.meta.includeDemographicSurvey - 1) {
+        // last page 
         $("#next-button").addClass("disabled");
         if (state.taskIndex != 0) {
             $("#prev-button").removeClass("disabled");
@@ -42,11 +56,13 @@ function updateTask() {
         $("#submit-button").removeClass("disabled");
         $("#final-task-fields").css("display", "block");
     } else if (state.taskIndex == 0) {
+        // first page 
         $("#next-button").removeClass("disabled");
         $("#prev-button").addClass("disabled");
         $("#submit-button").addClass("disabled");
         $("#final-task-fields").css("display", "none");
     } else {
+        // intermediate page
         $("#next-button").removeClass("disabled");
         $("#prev-button").removeClass("disabled");
         $("#submit-button").addClass("disabled");
@@ -55,9 +71,16 @@ function updateTask() {
 }
 
 function nextTask() {
-    if (state.taskIndex < config.meta.numSubtasks - 1) {
+    if (state.taskIndex < (config.meta.numSubtasks + config.meta.includeDemographicSurvey) - 1) {
         saveTaskData();
-        var err = custom.validateTask(getTaskInputs(state.taskIndex), state.taskIndex, getTaskOutputs(state.taskIndex));
+
+        var err;
+        if (isDemoSurvey()) {
+            err = demoSurvey.validateTask();
+        } else {
+            err = custom.validateTask(getTaskInputs(state.taskIndex), state.taskIndex, getTaskOutputs(state.taskIndex));
+        }
+
         if (err) {
             generateMessage("negative", err);
         } else {
@@ -172,7 +195,7 @@ function populateMetadata(config) {
 
     }
     $("#progress-bar").progress({
-        total: config.meta.numSubtasks,
+        total: config.meta.numSubtasks + config.meta.includeDemographicSurvey,
     });
 }
 
@@ -186,6 +209,12 @@ function setupButtons() {
     }
 }
 
+function isDemoSurvey() {
+    var useSurvey = config.meta.includeDemographicSurvey;
+    var lastTask = state.taskIndex == config.meta.numSubtasks + config.meta.includeDemographicSurvey -1;
+    return useSurvey && lastTask;
+}
+
 /* MAIN */
 $(document).ready(function() {
     $.getJSON("config.json").done(function(data) {
@@ -196,6 +225,7 @@ $(document).ready(function() {
         custom.loadTasks(config.meta.numSubtasks).done(function(taskInputs) {
             state.taskInputs = taskInputs;
             populateMetadata(config);
+            demoSurvey.maybeLoadSurvey(config);
             setupButtons(config);
         });
     });
