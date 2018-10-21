@@ -22,7 +22,7 @@ function saveTaskData() {
     if (config.meta.aggregate) {
         $.extend(state.taskOutputs, data);
     } else {
-        // TODO: figure out how best to include the demo survey data in the results
+        // TODO: figure out how best to include the demo survey data in the results? 
         state.taskOutputs[state.taskIndex] = data;
     }
 }
@@ -74,15 +74,15 @@ function nextTask() {
     if (state.taskIndex < (config.meta.numSubtasks + config.meta.includeDemographicSurvey) - 1) {
         saveTaskData();
 
-        var err;
+        var failedValidation;
         if (isDemoSurvey()) {
-            err = demoSurvey.validateTask();
+            failedValidation = demoSurvey.validateTask();
         } else {
-            err = custom.validateTask(getTaskInputs(state.taskIndex), state.taskIndex, getTaskOutputs(state.taskIndex));
+            failedValidation = custom.validateTask(getTaskInputs(state.taskIndex), state.taskIndex, getTaskOutputs(state.taskIndex));
         }
 
-        if (err) {
-            generateMessage("negative", err);
+        if (failedValidation) {
+            generateMessage("negative", failedValidation.errorMessage);
         } else {
             state.taskIndex++;
             updateTask();
@@ -118,6 +118,7 @@ function clearMessage() {
 
 function generateMessage(cls, header) {
     clearMessage();
+    if (!header) return;
     var messageStr = "<div class='ui message " + cls + "'>";
     messageStr += "<i class='close icon'></i>";
     messageStr += "<div class='header'>" + header + "</div></div>";
@@ -143,13 +144,20 @@ function submitHIT() {
     $("#submit-button").addClass("loading");
     var form = $("#submit-form");
     for (var i = 0; i < config.meta.numSubtasks; i++) {
-        var err = custom.validateTask(getTaskInputs(i), i, getTaskOutputs(i));
-        if (err) {
-            $("#submit-button").removeClass("loading");
-            generateMessage("negative", err);
+        var failedValidation = custom.validateTask(getTaskInputs(i), i, getTaskOutputs(i));
+        if (failedValidation) {
+            cancelSubmit(failedValidation.errorMessage);
             return;
         }
     }
+    if (config.meta.includeDemographicSurvey) {
+        var failedValidation = demoSurvey.validateTask();
+        if (failedValidation) {
+            cancelSubmit(failedValidation.errorMessage);
+            return;
+        }
+    }
+    console.log("survived the validation"); 
 
     addHiddenField(form, 'assignmentId', state.assignmentId);
     addHiddenField(form, 'workerId', state.workerId);
@@ -157,6 +165,9 @@ function submitHIT() {
         'inputs': state.taskInputs,
         'outputs': state.taskOutputs
     };
+    if (!config.meta.includeDemographicSurvey) {
+        results['feedback'] = $("#feedback-input").val();
+    }
     addHiddenField(form, 'results', JSON.stringify(results));
     addHiddenField(form, 'feedback', $("#feedback-input").val());
 
@@ -166,6 +177,11 @@ function submitHIT() {
     $("#submit-button").removeClass("loading");
     generateMessage("positive", "Thanks! Your task was submitted successfully.");
     $("#submit-button").addClass("disabled");
+}
+
+function cancelSubmit(err) {
+    $("#submit-button").removeClass("loading");
+    generateMessage("negative", err);
 }
 
 function gup(name) {

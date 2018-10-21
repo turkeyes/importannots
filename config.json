@@ -8,7 +8,7 @@
         "includeDemographicSurvey": true
     },
     "instructions": {
-        "simple": "These are simple instructions for <b>4</b> tasks",
+        "simple": "These are simple instructions for <b>3</b> tasks",
         "steps": [
             "instruction1",
             "instruction2",

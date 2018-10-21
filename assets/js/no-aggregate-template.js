@@ -53,9 +53,13 @@ var custom = {
     },
     validateTask: function(taskInput, taskIndex, taskOutput) {
         /*
-         * This function should return an error message if the 
-         * data stored in taskOutput is not valid (e.g. fully filled out), and 
-         * a falsey value otherwise
+         * This function should return a falsey value if data stored in taskOutput is valid 
+         * (e.g. fully filled out), and otherwise an object {errorMessage: "string"} 
+         * containing an error message to display. 
+         * 
+         * If the errorMessage string has length 0, the data will still be marked as invalid and
+         * the task will not be allowed to proceed, but no error message will be displayed (for
+         * instance, if you want to implement your own error announcement). 
          *
          * taskInput - if config.meta.aggregate is false, the object in the array from loadTasks
          *   corresponding to subtask taskIndex; else, the input object from loadTasks
@@ -65,12 +69,13 @@ var custom = {
          *   subtask. If config.meta.aggregate is set to true, this is the results object for the
          *   entire task
          * 
-         * returns: string indicating error message or falsey value
+         * returns: falsey value if the data is valid; otherwise an object with a field "errorMessage"
+         *    containing a string error message to display. 
          */
         if (taskOutput.trim().length > 0) {
-            return null;
+            return false;
         } else {
-            return "please complete the task!";
+            return {errorMessage: "please complete the task!"};
         }
     }
 };

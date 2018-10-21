@@ -89,6 +89,12 @@ var demoSurvey = {
         }; 
 	},
 	validateTask: function() {
-		return $('#survey-form').form('validate form');
+		console.log("validating demographic survey");
+		$('#survey-form').form('validate form');
+		// falsey value indicates no error...
+		if (!$('#survey-form').form('is valid')) {
+			return {errorMessage: ""}
+		}
+		return false;
 	}
 }
