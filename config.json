@@ -26,6 +26,7 @@
         "duration": 1200,
         "lifetime": 86400,
         "taskUrl": "your task URL goes here",
-        "production": false
+        "production": false,
+        "variants": []
     }
 }
