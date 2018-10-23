@@ -46,6 +46,12 @@ These fields are used by the scripts in the `mturk` folder to define how your HI
 * `hitCreation.numTasks` - how many duplicates of the HIT you want to create. Either this or `hitCreation.variants` must be specified. Overrides `hitCreation.variants`. (int)
 * `hitCreation.variants` - a list of dictionaries, where each dictionary represents a variant of your HIT. For each variant, the keys of the variant are merged with the rest of the keys in the `hitCreation` section of the config to create a full config object, and one task is generated to that specification, for a total of len(variants) tasks. For instance, you could use this to create 5 HITs where each one has a different querystring. Either this or `hitCreation.numTasks` must be specified; overriden by `hitCreation.numTasks`.
 
+##### Advanced
+
+These are advanced fields that will further customize your task.
+
+* `advanced.hideIfNotAccepted`: will automatically hide your HIT and show an error message if the user is viewing in an MTurk iFrame and has not yet accepted the task. The same behavior can be invoked manually from `custom.js` by calling `hideIfNotAccepted()`. (bool)
+
 #### `index.html`
 Find the section marked `<!-- vv CUSTOM EXPERIMENT MARKUP GOES HERE vv -->`, and add your custom HTML elements in that section (e.g. image divs, input boxes). Add `id`s to those HTML elements so you can easily refer to them with JQuery in the page's JavaScript (see `assets/js/custom.js`).
 

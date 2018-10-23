@@ -36,6 +36,9 @@ function getTaskOutputs(i) {
 }
 
 function updateTask() {
+    if (config.advanced.hideIfNotAccepted && hideIfNotAccepted()) {
+        return;
+    }
     $("#progress-bar").progress("set progress", state.taskIndex + 1);
     if (isDemoSurvey()) {
         demoSurvey.showTask();
@@ -229,6 +232,18 @@ function isDemoSurvey() {
     var useSurvey = config.meta.includeDemographicSurvey;
     var lastTask = state.taskIndex == config.meta.numSubtasks + config.meta.includeDemographicSurvey -1;
     return useSurvey && lastTask;
+}
+
+// Hides the task UI if the user is working within an MTurk iframe and has not accepted the task 
+// Returns true if the task was hidden, false otherwise
+function hideIfNotAccepted() {
+    if (state.assignmentId == "ASSIGNMENT_ID_NOT_AVAILABLE") {
+        console.log("Hiding if not accepted");
+        $('#experiment').hide();
+        $("#hit-not-accepted").show();
+        return true;
+    }
+    return false;
 }
 
 /* MAIN */

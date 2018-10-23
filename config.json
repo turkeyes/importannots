@@ -28,5 +28,8 @@
         "taskUrl": "your task URL goes here",
         "production": false,
         "variants": []
+    },
+    "advanced": {
+        "hideIfNotAccepted": false
     }
 }
