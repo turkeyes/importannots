@@ -148,7 +148,6 @@ function submitHIT() {
     saveTaskData();
     clearMessage();
     $("#submit-button").addClass("loading");
-    var form = $("#submit-form");
     for (var i = 0; i < config.meta.numSubtasks; i++) {
         var failedValidation = custom.validateTask(getTaskInputs(i), i, getTaskOutputs(i));
         if (failedValidation) {
@@ -163,57 +162,12 @@ function submitHIT() {
             return;
         }
     }
-    console.log("survived the validation"); 
 
-    var payload = {
-        'assignmentId': state.assignmentId,
-        'workerId': state.workerId,
-        'origin': state.origin,
-        'results': {
-            'inputs': state.taskInputs,
-            'outputs': state.taskOutputs
-        }
+    if (config.advanced.externalSubmit) {
+        externalSubmit(submitUrl);
+    } else {
+        mturkSubmit(submitUrl);
     }
-    if (!config.advanced.includeDemographicSurvey) {
-         payload.results.feedback = $("#feedback-input").val();
-    }
-
-    $.ajax({
-        url: submitUrl,
-        type: 'POST',
-        data: payload,
-        dataType: 'json'
-    }).then(function(response) {
-        console.log("RESPONSE FROM SERVER: ", response);
-        showSubmitKey(response['key']);
-    }).catch(function(error) {
-        // even if there is a bug/connection problem at this point,
-        // we want people to be paid. 
-        // use a consistent prefix so we can pick out problem cases,
-        // and include their worker id so we can figure out what happened
-        console.log("ERROR", error);
-        key = "mturk_key_" + state.workerId + "_" + state.assignmentId;
-        showSubmitKey(key);
-    })
-
-    // addHiddenField(form, 'assignmentId', state.assignmentId);
-    // addHiddenField(form, 'workerId', state.workerId);
-    // var results = {
-    //     'inputs': state.taskInputs,
-    //     'outputs': state.taskOutputs
-    // };
-    // if (!config.advanced.includeDemographicSurvey) {
-    //     results['feedback'] = $("#feedback-input").val();
-    // }
-    // addHiddenField(form, 'results', JSON.stringify(results));
-    // addHiddenField(form, 'feedback', $("#feedback-input").val());
-
-    // $("#submit-form").attr("action", submitUrl); 
-    // $("#submit-form").attr("method", "POST"); 
-    // $("#submit-form").submit();
-    $("#submit-button").removeClass("loading");
-    generateMessage("positive", "Thanks! Your task was submitted successfully.");
-    $("#submit-button").addClass("disabled");
 }
 
 function cancelSubmit(err) {
@@ -262,6 +216,8 @@ function setupButtons() {
     }
 }
 
+/* USEFUL HELPERS */
+
 function isDemoSurvey() {
     var useSurvey = config.advanced.includeDemographicSurvey;
     var lastTask = state.taskIndex == config.meta.numSubtasks + config.advanced.includeDemographicSurvey -1;
@@ -283,9 +239,94 @@ function hideIfNotAccepted() {
 // Code to show the user's validation code; only used if task is configured as an external link
 function showSubmitKey(key) {
     $('#submit-code').text(key);
-    $('#user-code').hide();
-    $('#submit-button').hide();
+    $('#experiment').hide();
     $('#succesful-submit').show();
+    selectText('submit-code');
+}
+
+// highlights/selects text within an html element
+// copied from:
+// https://stackoverflow.com/questions/985272/selecting-text-in-an-element-akin-to-highlighting-with-your-mouse
+function selectText(node) {
+    node = document.getElementById(node);
+
+    if (document.body.createTextRange) {
+        const range = document.body.createTextRange();
+        range.moveToElementText(node);
+        range.select();
+    } else if (window.getSelection) {
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(node);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    } else {
+        console.warn("Could not select text in node: Unsupported browser.");
+    }
+}
+
+/* SUBMIT FUNCTIONS */ 
+
+// submit to MTurk as a back-end. MTurk only accepts form submissions and frowns
+// upon async POSTs.
+function mturkSubmit(submitUrl) {
+    var form = $("#submit-form");
+    addHiddenField(form, 'assignmentId', state.assignmentId);
+    addHiddenField(form, 'workerId', state.workerId);
+    var results = {
+        'inputs': state.taskInputs,
+        'outputs': state.taskOutputs
+    };
+    if (!config.advanced.includeDemographicSurvey) {
+        results['feedback'] = $("#feedback-input").val();
+    }
+    console.log("results", results);
+    addHiddenField(form, 'results', JSON.stringify(results));
+    addHiddenField(form, 'feedback', $("#feedback-input").val());
+
+    $("#submit-form").attr("action", submitUrl); 
+    $("#submit-form").attr("method", "POST"); 
+    $("#submit-form").submit();
+
+    $("#submit-button").removeClass("loading");
+    generateMessage("positive", "Thanks! Your task was submitted successfully.");
+    $("#submit-button").addClass("disabled");
+}
+
+// submit to a customized back-end. 
+function externalSubmit(submitUrl) {
+    var payload = {
+        'assignmentId': state.assignmentId,
+        'workerId': state.workerId,
+        'origin': state.origin,
+        'results': {
+            'inputs': state.taskInputs,
+            'outputs': state.taskOutputs
+        }
+    }
+    console.log("payload", payload);
+    if (!config.advanced.includeDemographicSurvey) {
+        payload.results.feedback = $("#feedback-input").val();
+    }
+
+    $.ajax({
+        url: submitUrl,
+        type: 'POST',
+        data: payload,
+        dataType: 'json'
+    }).then(function(response) {
+        showSubmitKey(response['key']);
+    }).catch(function(error) {
+        // This means there was an error connecting to the DEVELOPER'S
+        // data collection server. 
+        // even if there is a bug/connection problem at this point,
+        // we want people to be paid. 
+        // use a consistent prefix so we can pick out problem cases,
+        // and include their worker id so we can figure out what happened
+        console.log("ERROR", error);
+        key = "mturk_key_" + state.workerId + "_" + state.assignmentId;
+        showSubmitKey(key);
+    })
 }
 
 /* MAIN */
