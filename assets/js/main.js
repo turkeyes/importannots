@@ -142,6 +142,9 @@ function addHiddenField(form, name, value) {
 
 function submitHIT() {
     var submitUrl = config.hitCreation.production ? MTURK_SUBMIT : SANDBOX_SUBMIT;
+    if (config.advanced.externalSubmit) {
+        submitUrl = config.advanced.externalSubmitUrl;
+    }
     saveTaskData();
     clearMessage();
     $("#submit-button").addClass("loading");
@@ -162,21 +165,52 @@ function submitHIT() {
     }
     console.log("survived the validation"); 
 
-    addHiddenField(form, 'assignmentId', state.assignmentId);
-    addHiddenField(form, 'workerId', state.workerId);
-    var results = {
-        'inputs': state.taskInputs,
-        'outputs': state.taskOutputs
-    };
-    if (!config.advanced.includeDemographicSurvey) {
-        results['feedback'] = $("#feedback-input").val();
+    var payload = {
+        'assignmentId': state.assignmentId,
+        'workerId': state.workerId,
+        'origin': state.origin,
+        'results': {
+            'inputs': state.taskInputs,
+            'outputs': state.taskOutputs
+        }
     }
-    addHiddenField(form, 'results', JSON.stringify(results));
-    addHiddenField(form, 'feedback', $("#feedback-input").val());
+    if (!config.advanced.includeDemographicSurvey) {
+         payload.results.feedback = $("#feedback-input").val();
+    }
 
-    $("#submit-form").attr("action", submitUrl); 
-    $("#submit-form").attr("method", "POST"); 
-    $("#submit-form").submit();
+    $.ajax({
+        url: submitUrl,
+        type: 'POST',
+        data: payload,
+        dataType: 'json'
+    }).then(function(response) {
+        console.log("RESPONSE FROM SERVER: ", response);
+        showSubmitKey(response['key']);
+    }).catch(function(error) {
+        // even if there is a bug/connection problem at this point,
+        // we want people to be paid. 
+        // use a consistent prefix so we can pick out problem cases,
+        // and include their worker id so we can figure out what happened
+        console.log("ERROR", error);
+        key = "mturk_key_" + state.workerId + "_" + state.assignmentId;
+        showSubmitKey(key);
+    })
+
+    // addHiddenField(form, 'assignmentId', state.assignmentId);
+    // addHiddenField(form, 'workerId', state.workerId);
+    // var results = {
+    //     'inputs': state.taskInputs,
+    //     'outputs': state.taskOutputs
+    // };
+    // if (!config.advanced.includeDemographicSurvey) {
+    //     results['feedback'] = $("#feedback-input").val();
+    // }
+    // addHiddenField(form, 'results', JSON.stringify(results));
+    // addHiddenField(form, 'feedback', $("#feedback-input").val());
+
+    // $("#submit-form").attr("action", submitUrl); 
+    // $("#submit-form").attr("method", "POST"); 
+    // $("#submit-form").submit();
     $("#submit-button").removeClass("loading");
     generateMessage("positive", "Thanks! Your task was submitted successfully.");
     $("#submit-button").addClass("disabled");
@@ -244,6 +278,14 @@ function hideIfNotAccepted() {
         return true;
     }
     return false;
+}
+
+// Code to show the user's validation code; only used if task is configured as an external link
+function showSubmitKey(key) {
+    $('#submit-code').text(key);
+    $('#user-code').hide();
+    $('#submit-button').hide();
+    $('#succesful-submit').show();
 }
 
 /* MAIN */
