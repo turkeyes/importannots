@@ -70,21 +70,27 @@ Features:
 
 This framework supports two different ways of configuring your hit. 
 
-##### MTurk iframe
+#### MTurk iframe
 
 Set `config.advanced.externalSubmit` to `false`.
 
 Your task will be displayed as an iframe within MTurk and your data will be submitted to MTurk's own back-end and stored there. You can download your collected data directly from MTurk.
 
+Here is what your task will look like within the iframe: 
+
 ![MTurk iframe](mturk_iframe.png)
 
-##### External link
+#### External link
 
 Set `config.advanced.externalSubmit` to `true`.
 
 On MTurk, your task appears as a link to your external website (specified by `config.hitCreation.taskUrl`) along with an input box for a confirmation code. MTurk workers navigate to your website and complete your task there. When they hit submit, their data is POSTed to `config.advanced.externalSubmitUrl`. This API is respnsible for returning a json object with a key called `key`. This will be displayed to the MTurk worker and they will input that key into the text box on MTurk as proof that they completed the task. You can download these keys from MTurk and use them to confirm that work was completed/approve the HITs.
 
+Here is what your task will look like within MTurk: 
+
 ![external link](mturk_external_link.png)
+
+Here is what workers will see when they HIT submit and receive a validation code:
 
 ![validation key](submit_code.png) 
 
