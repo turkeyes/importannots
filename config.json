@@ -30,6 +30,8 @@
     },
     "advanced": {
         "includeDemographicSurvey": false,
-        "hideIfNotAccepted": false
+        "hideIfNotAccepted": false,
+        "externalSubmit": true,
+        "externalSubmitUrl": ""
     }
 }
