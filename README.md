@@ -2,12 +2,20 @@
 A general-purpose template for Amazon Mechanical Turk tasks.
 
 ### Development
-Run `make watch` to watch SCSS files and compile to CSS. Run something like `python -m SimpleHTTPServer` to see the page locally.
+Run something like `python -m SimpleHTTPServer` to see the page locally.
+
+Run Jupyter notebooks in `mturk` folder to launch and monitor HITs.
 
 ### Customization
 This framework can be used to create MTurk HITs, broken up into discrete repeated subtasks.
 
-To define your own MTurk HIT, you only need to change things in three places:
+To define your own MTurk HIT, you only need to change things in three places: `index.js`, `custom.js`, and `config.json`. See below for details
+
+#### `index.html`
+Find the section marked `<!-- vv CUSTOM EXPERIMENT MARKUP GOES HERE vv -->`, and add your custom HTML elements in that section (e.g. image divs, input boxes). Add `id`s to those HTML elements so you can easily refer to them with JQuery in the page's JavaScript (see `assets/js/custom.js`).
+
+#### `assets/js/custom.js`
+Fill out the 4 functions: `loadTasks`, `showTask`, `collectData`, and `validateTask`. These define behavior for loading initial data, displaying a task, storing data from a task, and validating a task. We recommmend starting by copying one of our template files: `assets/js/aggregate-template.js` if you have set `config.meta.aggregate=true` or `assets/js/no-aggregate-template.js` if you have set `config.meta.aggregate=false`. 
 
 #### `config.json`
 Here, you can define your HIT's name, description, number of subtasks, instructions, etc.
@@ -55,12 +63,6 @@ Config fields:
 
 Features: 
 * use a queryword `skipto=<taskIndex>` to skip forward to the given `taskIndex`, for debugging purposes.
-
-#### `index.html`
-Find the section marked `<!-- vv CUSTOM EXPERIMENT MARKUP GOES HERE vv -->`, and add your custom HTML elements in that section (e.g. image divs, input boxes). Add `id`s to those HTML elements so you can easily refer to them with JQuery in the page's JavaScript (see `assets/js/custom.js`).
-
-#### `assets/js/custom.js`
-Fill out the 4 functions: `loadTasks`, `showTask`, `collectData`, and `validateTask`. These define behavior for loading initial data, displaying a task, storing data from a task, and validating a task. We recommmend starting by copying one of our template files: `assets/js/aggregate-template.js` if you have set `config.meta.aggregate=true` or `assets/js/no-aggregate-template.js` if you have set `config.meta.aggregate=false`. 
 
 ### Setting up the MTurk task
 
