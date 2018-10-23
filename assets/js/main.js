@@ -4,7 +4,7 @@ const SANDBOX_SUBMIT = "https://workersandbox.mturk.com/mturk/externalSubmit";
 var config = {};
 
 var state = {
-    taskIndex: 0,
+    taskIndex: gup("skipto") ? parseInt(gup("skipto")) : 0,
     taskInputs: {}, 
     taskOutputs: [],
     assignmentId: gup("assignmentId"),

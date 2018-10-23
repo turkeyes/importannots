@@ -48,9 +48,13 @@ These fields are used by the scripts in the `mturk` folder to define how your HI
 
 ##### Advanced
 
-These are advanced fields that will further customize your task.
+These are advanced fields and features that will further customize your task.
 
+Config fields: 
 * `advanced.hideIfNotAccepted`: will automatically hide your HIT and show an error message if the user is viewing in an MTurk iFrame and has not yet accepted the task. The same behavior can be invoked manually from `custom.js` by calling `hideIfNotAccepted()`. (bool)
+
+Features: 
+* use a queryword `skipto=<taskIndex>` to skip forward to the given `taskIndex`, for debugging purposes.
 
 #### `index.html`
 Find the section marked `<!-- vv CUSTOM EXPERIMENT MARKUP GOES HERE vv -->`, and add your custom HTML elements in that section (e.g. image divs, input boxes). Add `id`s to those HTML elements so you can easily refer to them with JQuery in the page's JavaScript (see `assets/js/custom.js`).
