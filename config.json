@@ -24,7 +24,7 @@
         "keywords": "these, are, your, HIT, tags",
         "duration": 1200,
         "lifetime": 86400,
-        "taskUrl": "https://people.csail.mit.edu/apnewman/mturk-template/",
+        "taskUrl": "http://localhost:8000",
         "production": false,
         "variants": []
     },
@@ -32,6 +32,6 @@
         "includeDemographicSurvey": false,
         "hideIfNotAccepted": false,
         "externalSubmit": false,
-        "externalSubmitUrl": ""
+        "externalSubmitUrl": "data"
     }
 }

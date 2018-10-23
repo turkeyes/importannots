@@ -308,6 +308,7 @@ function externalSubmit(submitUrl) {
     if (!config.advanced.includeDemographicSurvey) {
         payload.results.feedback = $("#feedback-input").val();
     }
+    console.log("submitUrl", submitUrl);
 
     $.ajax({
         url: submitUrl,
