@@ -2,14 +2,14 @@
 A general-purpose template for Amazon Mechanical Turk tasks.
 
 ### Development
-Run something like `python -m SimpleHTTPServer` to see the page locally.
+Run something like `python3 -m http.server` to test out the UI locally.
 
-Run Jupyter notebooks in `mturk` folder to launch and monitor HITs.
+Jupyter notebooks in the `mturk` folder are provided for launching and monitoring HITs. Edit the `hitCreation` fields in `config.json` to define how to set up your HITs.
 
-### Customization
+### UI Customization
 This framework can be used to create MTurk HITs, broken up into discrete repeated subtasks.
 
-To define your own MTurk HIT, you only need to change things in three places: `index.js`, `custom.js`, and `config.json`. See below for details
+To define your MTurk HIT, you only need to change things in three places: `index.js`, `custom.js`, and `config.json`. 
 
 #### `index.html`
 Find the section marked `<!-- vv CUSTOM EXPERIMENT MARKUP GOES HERE vv -->`, and add your custom HTML elements in that section (e.g. image divs, input boxes). Add `id`s to those HTML elements so you can easily refer to them with JQuery in the page's JavaScript (see `assets/js/custom.js`).
@@ -18,7 +18,7 @@ Find the section marked `<!-- vv CUSTOM EXPERIMENT MARKUP GOES HERE vv -->`, and
 Fill out the 4 functions: `loadTasks`, `showTask`, `collectData`, and `validateTask`. These define behavior for loading initial data, displaying a task, storing data from a task, and validating a task. We recommmend starting by copying one of our template files: `assets/js/aggregate-template.js` if you have set `config.meta.aggregate=true` or `assets/js/no-aggregate-template.js` if you have set `config.meta.aggregate=false`. 
 
 #### `config.json`
-Here, you can define your HIT's name, description, number of subtasks, instructions, etc.
+Here, you can define your HIT's name, description, number of subtasks, instructions, etc. Keep reading for a detailed description of the fields in the config. 
 
 ##### Metadata
 
@@ -60,15 +60,35 @@ These are advanced fields and features that will further customize your task.
 Config fields: 
 * `advanced.hideIfNotAccepted`: will automatically hide your HIT and show an error message if the user is viewing in an MTurk iFrame and has not yet accepted the task. The same behavior can be invoked manually from `custom.js` by calling `hideIfNotAccepted()`. (bool)
 * `advanced.includeDemographicSurvey` - setting this value to `true` automatically adds a demographic survey to the end of your task and collects/validates the data in it. 
+* `advanced.externalSubmit`: configure the task as an external link that submits data to an external source, instead of an MTurk iframe that submits data to the MTurk back-end (see the next section for details). Requires that `advanced.externalSubmitUrl` be set. (bool)
+* `advanced.externalSubmitUrl`: if `externalSubmit` is `true`, the url or the relative path of the route to poste the data to. It is expected that this route will accept the data via POST request and return an object containing a key `key` containing a validation code. (string)
 
 Features: 
 * use a queryword `skipto=<taskIndex>` to skip forward to the given `taskIndex`, for debugging purposes.
 
-### Setting up the MTurk task
+### MTurk HIT configuration 
 
-Jupyter notebooks in the `mturk` folder are provided for launching and monitoring HITs. Edit the `hitCreation` fields in `config.json` to define how to set up your HITs.
+This framework supports two different ways of configuring your hit. 
 
-Use the file `mturk/mturk.ipynb` if your interface is set up to use MTurk as a back-end for collecting data. Your HIT will appear as an iFrame within MTurk. 
+##### MTurk iframe
+
+Set `config.advanced.externalSubmit` to `false`.
+
+Your task will be displayed as an iframe within MTurk and your data will be submitted to MTurk's own back-end and stored there. You can download your collected data directly from MTurk.
+
+![MTurk iframe](mturk_iframe.png)
+
+##### External link
+
+Set `config.advanced.externalSubmit` to `true`.
+
+On MTurk, your task appears as a link to your external website (specified by `config.hitCreation.taskUrl`) along with an input box for a confirmation code. MTurk workers navigate to your website and complete your task there. When they hit submit, their data is POSTed to `config.advanced.externalSubmitUrl`. This API is respnsible for returning a json object with a key called `key`. This will be displayed to the MTurk worker and they will input that key into the text box on MTurk as proof that they completed the task. You can download these keys from MTurk and use them to confirm that work was completed/approve the HITs.
+
+![external link](mturk_external_link.png)
+
+![validation key](submit_code.png) 
+
+You are responsible for setting up your own data-collection infrastructure and issuing keys that you can use to confirm that workers completed the task.
 
 ### Screenshots
 Here's a demo of the task interface:
