@@ -1,6 +1,6 @@
 var demoSurvey = {
 	maybeLoadSurvey: function(config) {
-	    if (config.meta.includeDemographicSurvey) {
+	    if (config.advanced.includeDemographicSurvey) {
 	        console.log("loading demo survey");
 	        $('#demo-survey').load("assets/html/demo_survey.html");
 	        $('#demo-survey').hide();

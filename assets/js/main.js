@@ -48,7 +48,7 @@ function updateTask() {
         $('#custom-experiment').show();
         custom.showTask(getTaskInputs(state.taskIndex), state.taskIndex, getTaskOutputs(state.taskIndex));
     }
-    if (state.taskIndex == config.meta.numSubtasks + config.meta.includeDemographicSurvey - 1) {
+    if (state.taskIndex == config.meta.numSubtasks + config.advanced.includeDemographicSurvey - 1) {
         // last page 
         $("#next-button").addClass("disabled");
         if (state.taskIndex != 0) {
@@ -74,7 +74,7 @@ function updateTask() {
 }
 
 function nextTask() {
-    if (state.taskIndex < (config.meta.numSubtasks + config.meta.includeDemographicSurvey) - 1) {
+    if (state.taskIndex < (config.meta.numSubtasks + config.advanced.includeDemographicSurvey) - 1) {
         saveTaskData();
 
         var failedValidation;
@@ -153,7 +153,7 @@ function submitHIT() {
             return;
         }
     }
-    if (config.meta.includeDemographicSurvey) {
+    if (config.advanced.includeDemographicSurvey) {
         var failedValidation = demoSurvey.validateTask();
         if (failedValidation) {
             cancelSubmit(failedValidation.errorMessage);
@@ -168,7 +168,7 @@ function submitHIT() {
         'inputs': state.taskInputs,
         'outputs': state.taskOutputs
     };
-    if (!config.meta.includeDemographicSurvey) {
+    if (!config.advanced.includeDemographicSurvey) {
         results['feedback'] = $("#feedback-input").val();
     }
     addHiddenField(form, 'results', JSON.stringify(results));
@@ -214,7 +214,7 @@ function populateMetadata(config) {
 
     }
     $("#progress-bar").progress({
-        total: config.meta.numSubtasks + config.meta.includeDemographicSurvey,
+        total: config.meta.numSubtasks + config.advanced.includeDemographicSurvey,
     });
 }
 
@@ -229,8 +229,8 @@ function setupButtons() {
 }
 
 function isDemoSurvey() {
-    var useSurvey = config.meta.includeDemographicSurvey;
-    var lastTask = state.taskIndex == config.meta.numSubtasks + config.meta.includeDemographicSurvey -1;
+    var useSurvey = config.advanced.includeDemographicSurvey;
+    var lastTask = state.taskIndex == config.meta.numSubtasks + config.advanced.includeDemographicSurvey -1;
     return useSurvey && lastTask;
 }
 

@@ -21,7 +21,6 @@ These fields are used to customize the UI template used for your task.
 * `meta.numSubtasks` - the number of subtasks your task will have (int)
 * `meta.disclaimer` - the experiment disclaimer text displayed at the bottom of the page (string)
 * `meta.aggregate` - whether inputs and outputs for the task should be divided up by subtasks, or the same inputs and outputs should be stored across all subtasks. If false, outputs will be stored in an array of length `numSubtasks`; otherwise, they will be merged a single object. In general, setting this to `false` will be better if subtasks are repetitive and self-contained (for example, labeling a series of images), and this to `true` will be better if the behavior of one subtask depends on input/output from another subtask (for instance, labeling an image in one subtask and writing a description of it in the next). 
-* `meta.includeDemographicSurvey` - setting this value to `true` automatically adds a demographic survey to the end of your task and collects/validates the data in it. 
 
 ##### Instructions
 
@@ -52,6 +51,7 @@ These are advanced fields and features that will further customize your task.
 
 Config fields: 
 * `advanced.hideIfNotAccepted`: will automatically hide your HIT and show an error message if the user is viewing in an MTurk iFrame and has not yet accepted the task. The same behavior can be invoked manually from `custom.js` by calling `hideIfNotAccepted()`. (bool)
+* `advanced.includeDemographicSurvey` - setting this value to `true` automatically adds a demographic survey to the end of your task and collects/validates the data in it. 
 
 Features: 
 * use a queryword `skipto=<taskIndex>` to skip forward to the given `taskIndex`, for debugging purposes.
