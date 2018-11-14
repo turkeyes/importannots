@@ -100,7 +100,7 @@ class S(SimpleHTTPRequestHandler):
                 self._set_headers()
                 data = self.rfile.read(int(self.headers['Content-Length']))
                 data = data.decode("utf-8")
-                data = parse_qs(data)
+                data = json.loads(data)
                 print("DATA", data)
                 key = str(uuid.uuid4())
                 if SAVE_LOCALLY: 

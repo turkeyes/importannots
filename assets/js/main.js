@@ -313,7 +313,7 @@ function externalSubmit(submitUrl) {
     $.ajax({
         url: submitUrl,
         type: 'POST',
-        data: payload,
+        data: JSON.stringify(payload),
         dataType: 'json'
     }).then(function(response) {
         showSubmitKey(response['key']);
