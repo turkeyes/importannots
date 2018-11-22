@@ -1,0 +1,3 @@
+./infographics_1_0_free.png
+./magazine-covers_14_31_free.png
+./magazine-covers_14_32_free.png

@@ -1,32 +1,32 @@
 {
     "meta": {
-        "title": "Experiment Title",
-        "description": "desc",
-        "numSubtasks": 3,
+        "title": "Importance Labeling",
+        "description": "Highlight the important parts of an image",
+        "numSubtasks": 1,
         "disclaimer": "This is a disclaimer. You are participating in this experiment voluntarily.",
         "aggregate": false
     },
     "instructions": {
-        "simple": "These are simple instructions for <b>3</b> tasks",
+        "simple": "Your task is to draw the most important regions (either graphics or text blocks) for a set of images. However, you DO NOT need to be very precise. We are only looking for a rough indication of the most important regions. You also don't need to mark every region, just those which appear important.",
         "steps": [
-            "instruction1",
-            "instruction2",
-            "instruction3"
+            "An image will be shown. Analyze it and identify the most important parts.",
+            "Label those parts with polygons. Clicking generates one vertex of the polygon. Double click closes it.",
+            "Once you are done, click Next to go to the next image.",
+            "Repeat the process."
         ],
         "images": []
     },
     "hitCreation": {
-        "title": "HIT Title",
-        "description": "HIT description",
-        "numTasks": 5,
-        "numAssignments": 100,
+        "title": "Importance labeling",
+        "description": "Highlight the important parts of an image.",
+        "numTasks": 1,
+        "numAssignments": 2000,
         "rewardAmount": "0.00",
-        "keywords": "these, are, your, HIT, tags",
+        "keywords": "labeling, importance, highlighting",
         "duration": 1200,
         "lifetime": 86400,
-        "taskUrl": "",
-        "production": false,
-        "variants": []
+        "taskUrl": "https://cfosco.github.io/mturk-importance/",
+        "production": false
     },
     "advanced": {
         "includeDemographicSurvey": false,
