@@ -13,7 +13,7 @@ var custom = {
          * returns: if config.meta.aggregate is set to false, an array of objects with length config.meta.numTasks,
          * one object for each task; else, an object that will be made available to all subtasks
          */
-         
+
          // var fold = gup("fold")
          //  if (fold == ''){
          //    fold =1
@@ -40,6 +40,9 @@ var custom = {
          //    return this.images_to_label;
          //
          //  }.bind(this));
+         return $.get("").then(function() {
+            return [];
+        });
 
     },
     showTask: function(taskInput, taskIndex, taskOutput) {
