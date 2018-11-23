@@ -13,32 +13,33 @@ var custom = {
          * returns: if config.meta.aggregate is set to false, an array of objects with length config.meta.numTasks,
          * one object for each task; else, an object that will be made available to all subtasks
          */
-         var fold = gup("fold")
-          if (fold == ''){
-            fold =1
-          }
-          console.log('fold:',fold)
-
-          return $.getJSON("folds_to_imgs.json").done(function(folds_to_imgs) {
-
-            var imgs_to_load = folds_to_imgs[fold]
-            console.log('imgs_to_load:',imgs_to_load)
-
-            this.images_to_label = new Array()
-
-            for (i=0; i<imgs_to_load.length; i++) {
-                  this.images_to_label[i] = new Image();
-                  this.images_to_label[i].src = imgs_to_load[i];
-            }
-
-            this.num_images_to_label = this.images_to_label.length
-
-
-            console.log('End of loadTasks. Returning [this.images_to_label, this.num_images_to_label]:',[this.images_to_label, this.num_images_to_label])
-
-            return this.images_to_label;
-
-          }.bind(this));
+         
+         // var fold = gup("fold")
+         //  if (fold == ''){
+         //    fold =1
+         //  }
+         //  console.log('fold:',fold)
+         //
+         //  return $.getJSON("folds_to_imgs.json").done(function(folds_to_imgs) {
+         //
+         //    var imgs_to_load = folds_to_imgs[fold]
+         //    console.log('imgs_to_load:',imgs_to_load)
+         //
+         //    this.images_to_label = new Array()
+         //
+         //    for (i=0; i<imgs_to_load.length; i++) {
+         //          this.images_to_label[i] = new Image();
+         //          this.images_to_label[i].src = imgs_to_load[i];
+         //    }
+         //
+         //    this.num_images_to_label = this.images_to_label.length
+         //
+         //
+         //    console.log('End of loadTasks. Returning [this.images_to_label, this.num_images_to_label]:',[this.images_to_label, this.num_images_to_label])
+         //
+         //    return this.images_to_label;
+         //
+         //  }.bind(this));
 
     },
     showTask: function(taskInput, taskIndex, taskOutput) {

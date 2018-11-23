@@ -78,7 +78,7 @@ Your task will be displayed as an iframe within MTurk and your data will be subm
 
 Here is what your task will look like within the iframe: 
 
-![MTurk iframe](mturk_iframe.png)
+![MTurk iframe](img/mturk_iframe.png)
 
 #### External link
 
@@ -88,14 +88,14 @@ On MTurk, your task appears as a link to your external website (specified by `co
 
 Here is what your task will look like within MTurk: 
 
-![external link](mturk_external_link.png)
+![external link](img/mturk_external_link.png)
 
 Here is what workers will see when they HIT submit and receive a validation code:
 
-![validation key](submit_code.png) 
+![validation key](img/submit_code.png) 
 
 You are responsible for setting up your own data-collection infrastructure and issuing keys that you can use to confirm that workers completed the task.
 
 ### Screenshots
 Here's a demo of the task interface:
-![demo](demo.gif)
+![demo](img/demo.gif)
