@@ -14,7 +14,7 @@
             "Once you are done, click Next to go to the next image.",
             "Repeat the process."
         ],
-        "images": []
+        "images": ["https://cfosco.github.io/mturk-importance/img/example1_importance_labeling"]
     },
     "hitCreation": {
         "title": "Importance labeling",
