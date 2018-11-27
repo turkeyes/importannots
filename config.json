@@ -10,7 +10,7 @@
         "simple": "Your task is to draw the most important regions (either graphics or text blocks) for a set of images. However, you DO NOT need to be very precise. We are only looking for a rough indication of the most important regions. You also don't need to mark every region, just those which appear important.",
         "steps": [
             "An image will be shown. Analyze it and identify the most important parts.",
-            "Label those parts with polygons. Clicking generates one vertex of the polygon. Double click closes it.",
+            "Label those parts with one of the given tools: stroke or polygons.",
             "Once you are done, click Next to go to the next image.",
             "Repeat the process."
         ],
