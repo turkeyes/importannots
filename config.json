@@ -26,7 +26,8 @@
         "keywords": "labeling, importance, highlighting",
         "duration": 1200,
         "lifetime": 86400,
-        "taskUrl": "https://cfosco.github.io/mturk-importance/?url=fold1.txt",
+        "taskUrl": "https://cfosco.github.io/mturk-importance/",
+        "fold":"fold2_dropbox.txt",
         "production": false
     },
     "advanced": {

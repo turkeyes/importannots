@@ -1,2 +1,2 @@
-./files/certificates_1_13_MACS70yIlqs.png
-./files/certificates_1_11_MAB6rLXUI0U.png
+./test_imgs_canva_scraping2/certificates_1_13_MACS70yIlqs.png
+./test_imgs_canva_scraping2/certificates_1_11_MAB6rLXUI0U.png
