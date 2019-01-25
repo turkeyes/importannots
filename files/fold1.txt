@@ -1,3 +1,5 @@
 ./files/infographics_1_0_free.png
 ./files/magazine-covers_14_31_free.png
 ./files/magazine-covers_14_32_free.png
+./files/certificates_1_13_MACS70yIlqs.png
+./files/certificates_1_11_MAB6rLXUI0U.png

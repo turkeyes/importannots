@@ -11,6 +11,7 @@
         "steps": [
             "An image will be shown. Analyze it and identify the most important parts.",
             "Label those parts with one of the given tools: stroke or polygons.",
+            "Please ignore all watermarks.",
             "Once you are done, click Next to go to the next image.",
             "Repeat the process."
         ],
