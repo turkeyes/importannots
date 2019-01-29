@@ -95,11 +95,11 @@ var custom = {
        const NUM_STROKES = 24
        strokes=new Array;
 
-        for (i=0; i<NUM_STROKES; i++){
+        for (i=0; i<NUM_STROKES; i++) {
           stroke_value = document.getElementById('strokes'+i).value
 
           // console.log('stroke i at CollectData time:', i, stroke_value)
-          if (stroke_value != ''){
+          if (stroke_value != '') {
               // console.log('stroke pushed')
               strokes.push(stroke_value)
           }

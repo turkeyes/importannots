@@ -5,7 +5,7 @@ var config = {};
 
 var state = {
     taskIndex: gup("skipto") ? parseInt(gup("skipto")) : 0,
-    taskInputs: {}, 
+    taskInputs: {},
     taskOutputs: [],
     assignmentId: gup("assignmentId"),
     workerId: gup("workerId"),
@@ -22,7 +22,7 @@ function saveTaskData() {
     if (config.meta.aggregate) {
         $.extend(state.taskOutputs, data);
     } else {
-        // TODO: figure out how best to include the demo survey data in the results? 
+        // TODO: figure out how best to include the demo survey data in the results?
         state.taskOutputs[state.taskIndex] = data;
     }
 }
@@ -49,7 +49,7 @@ function updateTask() {
         custom.showTask(getTaskInputs(state.taskIndex), state.taskIndex, getTaskOutputs(state.taskIndex));
     }
     if (state.taskIndex == config.meta.numSubtasks + config.advanced.includeDemographicSurvey - 1) {
-        // last page 
+        // last page
         $("#next-button").addClass("disabled");
         if (state.taskIndex != 0) {
             $("#prev-button").removeClass("disabled");
@@ -59,7 +59,7 @@ function updateTask() {
         $("#submit-button").removeClass("disabled");
         $("#final-task-fields").css("display", "block");
     } else if (state.taskIndex == 0) {
-        // first page 
+        // first page
         $("#next-button").removeClass("disabled");
         $("#prev-button").addClass("disabled");
         $("#submit-button").addClass("disabled");
@@ -107,9 +107,9 @@ function toggleInstructions() {
     if ($("#experiment").css("display") == "none") {
         $("#experiment").css("display", "flex");
         $("#instructions").css("display", "none");
-        updateTask();
+        // updateTask();
     } else {
-        saveTaskData();
+        // saveTaskData();
         $("#experiment").css("display", "none");
         $("#instructions").css("display", "flex");
     }
@@ -224,7 +224,7 @@ function isDemoSurvey() {
     return useSurvey && lastTask;
 }
 
-// Hides the task UI if the user is working within an MTurk iframe and has not accepted the task 
+// Hides the task UI if the user is working within an MTurk iframe and has not accepted the task
 // Returns true if the task was hidden, false otherwise
 function hideIfNotAccepted() {
     if (state.assignmentId == "ASSIGNMENT_ID_NOT_AVAILABLE") {
@@ -265,7 +265,7 @@ function selectText(node) {
     }
 }
 
-/* SUBMIT FUNCTIONS */ 
+/* SUBMIT FUNCTIONS */
 
 // submit to MTurk as a back-end. MTurk only accepts form submissions and frowns
 // upon async POSTs.
@@ -284,8 +284,8 @@ function mturkSubmit(submitUrl) {
     addHiddenField(form, 'results', JSON.stringify(results));
     addHiddenField(form, 'feedback', $("#feedback-input").val());
 
-    $("#submit-form").attr("action", submitUrl); 
-    $("#submit-form").attr("method", "POST"); 
+    $("#submit-form").attr("action", submitUrl);
+    $("#submit-form").attr("method", "POST");
     $("#submit-form").submit();
 
     $("#submit-button").removeClass("loading");
@@ -293,7 +293,7 @@ function mturkSubmit(submitUrl) {
     $("#submit-button").addClass("disabled");
 }
 
-// submit to a customized back-end. 
+// submit to a customized back-end.
 function externalSubmit(submitUrl) {
     var payload = {
         'assignmentId': state.assignmentId,
@@ -319,9 +319,9 @@ function externalSubmit(submitUrl) {
         showSubmitKey(response['key']);
     }).catch(function(error) {
         // This means there was an error connecting to the DEVELOPER'S
-        // data collection server. 
+        // data collection server.
         // even if there is a bug/connection problem at this point,
-        // we want people to be paid. 
+        // we want people to be paid.
         // use a consistent prefix so we can pick out problem cases,
         // and include their worker id so we can figure out what happened
         console.log("ERROR", error);
@@ -345,4 +345,3 @@ $(document).ready(function() {
         });
     });
 });
-

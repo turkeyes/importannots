@@ -20,12 +20,12 @@
     "hitCreation": {
         "title": "Importance labeling",
         "description": "Highlight the important parts of an image.",
-        "numTasks": 1,
+        "numTasks": 10,
         "numAssignments": 2000,
         "rewardAmount": "0.00",
         "keywords": "labeling, importance, highlighting",
         "duration": 1200,
-        "lifetime": 86400,
+        "lifetime": 186400,
         "taskUrl": "https://cfosco.github.io/mturk-importance/",
         "fold":"fold2_dropbox.txt",
         "production": false
