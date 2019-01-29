@@ -103,15 +103,27 @@ function prevTask() {
     }
 }
 
+// function toggleInstructions() {
+//     if ($("#experiment").css("display") == "none") {
+//         $("#experiment").css("display", "flex");
+//         $("#instructions").css("display", "none");
+//         // updateTask();
+//     } else {
+//         // saveTaskData();
+//         $("#experiment").css("display", "none");
+//         $("#instructions").css("display", "flex");
+//     }
+// }
+
 function toggleInstructions() {
-    if ($("#experiment").css("display") == "none") {
-        $("#experiment").css("display", "flex");
-        $("#instructions").css("display", "none");
+    if ($("#experiment").css("visibility") == "hidden") {
+        $("#experiment").css("visibility", "visible");
+        $("#instructions").css("visibility", "hidden");
         // updateTask();
     } else {
         // saveTaskData();
-        $("#experiment").css("display", "none");
-        $("#instructions").css("display", "flex");
+        $("#experiment").css("visibility", "hidden");
+        $("#instructions").css("visibility", "visible");
     }
 }
 
