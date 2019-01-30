@@ -1,20 +1,19 @@
 {
     "meta": {
         "title": "Annotate the most important regions on graphic designs",
-        "description": "Manually highlight the important parts of a graphic design. You will be shown a set of 5 images, and you will have to indicate which parts feel important to you.",
+        "description": "You will be shown 5 graphic design images, and you will be asked to mark which parts of the images you think are most important.",
         "numSubtasks": 1,
         "disclaimer": "This is a disclaimer. You are participating in this experiment voluntarily.",
         "aggregate": false,
         "imgsPerFold": 5
     },
     "instructions": {
-        "simple": "Your task is to highlight the most important regions (either graphics or text blocks) for a set of 5 images. You don't need to be very precise. You also don't need to mark every region, just those which appear important (parts that help you understand what the image is about). Disregard watermarks.<br><br>To annotate using the Stroke Fill interface (default):<br>(1) Click on the edge of the element you would like to trace around;<br>(2) While holding the mouse down, trace around the element until you reach your approximate starting point.<br>The interface will create a nice outline. A demonstration of Stroke Fill can be seen in the image below. If you are unsatisfied with it, you can click 'Undo'.<br><br>To annotate using the Polygon Fill interface:<br>(1) Click on the Polygon Fill radial button on the right menu.<br>(2) Click on an edge of the element you want to annotate.<br>(3) Without holding the mouse button, move the mouse towards a new edge. The tool will create a straight line between the starting point and your mouse position.<br>(3) Click again to generate a new point in the polygon.<br>(4) Continue outlining the object until you reach your starting point, indicating by a blue circle. Clicking on that blue circle finishes the polygon and frees the mouse.",
+        "simple": "Your task is to highlight the most important regions (either graphics or text) in 5 images. These regions help you understand what the image is about. You can select multiple regions per image. Don't worry about making the boundaries of the annotation super precise. Please ignore watermarks.<br><br>You have 3 tools you can use to annotate images (in the menu bar on the right-side of the image). Please pick whichever you prefer. You can try out different options.<br><br><b>To annotate using the Stroke Fill (default):</b><br>(1) Click on the edge of the element you would like to trace around.<br>(2) While holding the mouse down, trace around the element until you reach your approximate starting point.<br>(3) A nice outline will be automatically created. If you are unsatisfied with it, you can click 'Undo'.<br><br>A demonstration of Stroke Fill can be seen in the sample video below.<br><br><b>To annotate using the Polygon Fill:</b><br>(1) Click on the Polygon Fill button on the right menu.<br>(2) Click on the edge of the element you want to annotate.<br>(3) Let go of the mouse and move it towards a new edge. A straight line between the starting point and your mouse position will be automatically created.<br>(3) Click again to generate a new point.<br>(4) Continue outlining the object until you reach your starting point, indicated by a blue circle. Clicking on the blue circle completes the annotation.<br><br><b>To annotate using the Regular Stroke:</b><br>(1) Click on the Regular Stroke button on the right menu.<br>(2) Pick a Brush Size (or go with the default).<br>(3) Paint over the whole image region you want to select as important.<br><br>When you are done annotating all 5 images, you will see a completion screen, at which point you will be able to submit the HIT.<br><br>Note: this task should not take long. This is why there is a 1 minute time limit on each image. You do not need to use the full minute. Click 'next' when you are done annotating an image.",
         "steps": [
             "An image will be shown. Analyze it and identify the most important parts.",
             "Label those parts with one of the 3 available tools: Regular Stroke, Stroke Fill or Polygon Fill.",
-            "Please ignore all watermarks.",
             "Once you are done, click Next to go to the next image.",
-            "Repeat the process."
+            "Repeat the process until all images are annotated. At that point, you can click submit to finish the task."
         ],
         "images": ["https://cfosco.github.io/mturk-importance/img/example1_importance_labeling.gif"]
     },
