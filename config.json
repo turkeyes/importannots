@@ -1,16 +1,17 @@
 {
     "meta": {
-        "title": "Importance Labeling",
-        "description": "Highlight the important parts of an image",
+        "title": "Annotate the most important regions on graphic designs",
+        "description": "Manually highlight the important parts of a graphic design. You will be shown a set of 5 images, and you will have to indicate which parts feel important to you.",
         "numSubtasks": 1,
         "disclaimer": "This is a disclaimer. You are participating in this experiment voluntarily.",
-        "aggregate": false
+        "aggregate": false,
+        "imgsPerFold": 5
     },
     "instructions": {
-        "simple": "Your task is to draw the most important regions (either graphics or text blocks) for a set of images. However, you DO NOT need to be very precise. We are only looking for a rough indication of the most important regions. You also don't need to mark every region, just those which appear important.",
+        "simple": "Your task is to highlight the most important regions (either graphics or text blocks) for a set of 5 images. You don't need to be very precise. You also don't need to mark every region, just those which appear important (parts that help you understand what the image is about). Disregard watermarks.<br><br>To annotate using the Stroke Fill interface (default):<br>(1) Click on the edge of the element you would like to trace around;<br>(2) While holding the mouse down, trace around the element until you reach your approximate starting point.<br>The interface will create a nice outline. A demonstration of Stroke Fill can be seen in the image below. If you are unsatisfied with it, you can click 'Undo'.<br><br>To annotate using the Polygon Fill interface:<br>(1) Click on the Polygon Fill radial button on the right menu.<br>(2) Click on an edge of the element you want to annotate.<br>(3) Without holding the mouse button, move the mouse towards a new edge. The tool will create a straight line between the starting point and your mouse position.<br>(3) Click again to generate a new point in the polygon.<br>(4) Continue outlining the object until you reach your starting point, indicating by a blue circle. Clicking on that blue circle finishes the polygon and frees the mouse.",
         "steps": [
             "An image will be shown. Analyze it and identify the most important parts.",
-            "Label those parts with one of the given tools: stroke or polygons.",
+            "Label those parts with one of the 3 available tools: Regular Stroke, Stroke Fill or Polygon Fill.",
             "Please ignore all watermarks.",
             "Once you are done, click Next to go to the next image.",
             "Repeat the process."
@@ -18,16 +19,16 @@
         "images": ["https://cfosco.github.io/mturk-importance/img/example1_importance_labeling.gif"]
     },
     "hitCreation": {
-        "title": "Importance labeling",
-        "description": "Highlight the important parts of an image.",
-        "numTasks": 10,
+        "title": "Annotate the most important regions on graphic designs",
+        "description": "Manually highlight the important parts of a graphic design. You will be shown a set of 5 images, and you will have to indicate which parts feel important to you.",
+        "numTasks": 1,
         "numAssignments": 2000,
         "rewardAmount": "0.00",
         "keywords": "labeling, importance, highlighting",
         "duration": 1200,
         "lifetime": 186400,
         "taskUrl": "https://cfosco.github.io/mturk-importance/",
-        "fold":"fold2_dropbox.txt",
+        "fold": "fold2_dropbox.txt",
         "production": false
     },
     "advanced": {

@@ -129,22 +129,29 @@ var custom = {
          * returns: falsey value if the data is valid; otherwise an object with a field "errorMessage"
          *    containing a string error message to display.
          */
-         // Checking validity: Task valid only if at least one image is annotated
+
+         console.log('Entering ValidateTask. taskOutput length is:', taskOutput.length)
+         // Checking validity: Task valid only if ALL IMAGES are annotated
          valid = false
 
-         for (i=0; i<taskOutput.length; i++){
-           if (taskOutput[i].split(':')[1].length > 0) {
-             valid = true
+         if (taskOutput.length >= config.meta.imgsPerFold) {
+           for (i=0; i<taskOutput.length; i++){
+             if (taskOutput[i].split(':')[1].length > 0) {
+               valid = true
+             }
            }
-         }
+       }
 
-         // console.log('valid:',valid)
+         console.log('valid:',valid)
 
          // Return null if task is valid
           if (valid) {
-              return null;
+            return null;
           } else {
-              return "HIT invalid: you need to annotate important regions on all images!";
+            console.log('HIT invalid, returning error message')
+            var msg = "Can't submit yet!  You have not completed the HIT yet as you have not annotated all images. Click Next to go to the next image. You will be able to click submit when the Next button becomes unclickable and the message 'Hit Complete. Please Submit' appears in the interface";
+            console.log(msg)
+            return msg;
           }
     }
 };

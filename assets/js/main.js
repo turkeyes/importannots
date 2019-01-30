@@ -40,6 +40,7 @@ function updateTask() {
         return;
     }
     $("#progress-bar").progress("set progress", state.taskIndex + 1);
+    console.log('setting bar progress to:', state.taskIndex + 1)
     if (isDemoSurvey()) {
         demoSurvey.showTask();
     } else {
@@ -115,35 +116,27 @@ function prevTask() {
 //     }
 // }
 
-function toggleInstructions() {
-    if ($("#experiment").css("display") == "None") {
-      $("#experiment").css("display", "flex")
-      $("#experiment").css("visibility", "visible")
-      $("#instructions").css("visibility", "hidden")
-    }
+function firstTaskShow() {
+  $("#experiment").css("display", "flex")
+  $("#instructions").css("display", "none");
 
-    if ($("#experiment").css("visibility") == "hidden") {
-        $("#experiment").css("visibility", "visible");
-        $("#instructions").css("visibility", "hidden");
-        // updateTask();
-    } else {
-        // saveTaskData();
-        $("#experiment").css("visibility", "hidden");
-        $("#instructions").css("visibility", "visible");
-    }
+  $("#progress-bar").progress("set progress", state.taskIndex + 1);
+  console.log('setting bar progress to:', state.taskIndex + 1)
 }
+
 
 function clearMessage() {
     $("#message-field").html("");
 }
 
 function generateMessage(cls, header) {
+  console.log('generating Message with cls and header:',cls,header)
     clearMessage();
     if (!header) return;
     var messageStr = "<div class='ui message " + cls + "'>";
     messageStr += "<i class='close icon'></i>";
     messageStr += "<div class='header'>" + header + "</div></div>";
-
+    console.log('messageStr',messageStr)
     var newMessage = $(messageStr);
     $("#message-field").append(newMessage);
     newMessage.click(function() {
@@ -158,7 +151,23 @@ function addHiddenField(form, name, value) {
     form.append(input);
 }
 
+function hitDone() {
+  strokes = custom.collectData()
+  if (strokes.length < config.meta.imgsPerFold) {
+    return False
+  }
+  else {
+    return True
+  }
+}
+
 function submitHIT() {
+
+    // if (!hitDone() ) {
+    //   $("#hitNotDoneMessage").css("display", "flex");
+    //   return;
+    // }
+
     var submitUrl = config.hitCreation.production ? MTURK_SUBMIT : SANDBOX_SUBMIT;
     if (config.advanced.externalSubmit) {
         submitUrl = config.advanced.externalSubmitUrl;
@@ -169,14 +178,14 @@ function submitHIT() {
     for (var i = 0; i < config.meta.numSubtasks; i++) {
         var failedValidation = custom.validateTask(getTaskInputs(i), i, getTaskOutputs(i));
         if (failedValidation) {
-            cancelSubmit(failedValidation.errorMessage);
+            cancelSubmit(failedValidation);
             return;
         }
     }
     if (config.advanced.includeDemographicSurvey) {
         var failedValidation = demoSurvey.validateTask();
         if (failedValidation) {
-            cancelSubmit(failedValidation.errorMessage);
+            cancelSubmit(failedValidation);
             return;
         }
     }
@@ -219,6 +228,7 @@ function populateMetadata(config) {
         $("#instructions-demo").append($(imgEle));
 
     }
+    console.log('TOTAL FOR PROGRESS BAR:',config.meta.numSubtasks + config.advanced.includeDemographicSurvey)
     $("#progress-bar").progress({
         total: config.meta.numSubtasks + config.advanced.includeDemographicSurvey,
     });
@@ -227,7 +237,8 @@ function populateMetadata(config) {
 function setupButtons() {
     $("#next-button").click(nextTask);
     $("#prev-button").click(prevTask);
-    $(".instruction-button").click(toggleInstructions);
+    // $(".instruction-button").click(toggleInstructions);
+    $(".continue-button").click(firstTaskShow);
     $("#submit-button").click(submitHIT);
     if (state.assignmentId == "ASSIGNMENT_ID_NOT_AVAILABLE") {
         $("#submit-button").remove();
@@ -348,9 +359,47 @@ function externalSubmit(submitUrl) {
     })
 }
 
+
+function setupModal() {
+  /* FUNCTIONS FOR THE INSTRUCTIONS MODAL */
+  // Get the modal
+  var modal = document.getElementById('myModal');
+
+  // Get the button that opens the modal
+  var btn = document.getElementById("show-instructions");
+  // $(".instruction-button").click(function() {
+  //   modal.style.display = "block";
+  // })
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks on the button, open the modal
+  btn.onclick = function() {
+    console.log('instructions button clicked')
+    modal.style.display = "block";
+  }
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+
+}
+
+
 /* MAIN */
 $(document).ready(function() {
+
     $.getJSON("config.json").done(function(data) {
+
         config = data;
         if (config.meta.aggregate) {
             state.taskOutputs = {};
@@ -360,6 +409,7 @@ $(document).ready(function() {
             populateMetadata(config);
             demoSurvey.maybeLoadSurvey(config);
             setupButtons(config);
+            setupModal();
         });
     });
 });

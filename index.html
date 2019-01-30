@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" href="assets/lib/semantic/semantic.min.css">
     <link rel="stylesheet" href="assets/css/overrides.css">
+    <link rel="stylesheet" href="assets/css/modal.css">
     <script src="assets/lib/jquery/jquery-3.1.1.min.js"></script>
     <script src="assets/lib/semantic/semantic.min.js"></script>
     <script src="assets/js/custom.js"></script>
@@ -37,7 +38,7 @@
                     <h3>Sample task:</h3>
                     <div id="instructions-demo"></div>
                 </div>
-                <div class="ui primary button right floated instruction-button">Continue</div>
+                <div class="ui primary button right floated continue-button">Continue</div>
             </div>
         </div>
     </div>
@@ -150,21 +151,22 @@
         <!-- ^^ CUSTOM EXPERIMENT MARKUP GOES HERE ^^ -->
         <div id="demo-survey" class ="ui top aligned centered grid"></div>
         <div class="middle aligned row">
-            <div class="eight wide column">
+            <div class="fourteen wide column">
                 <div id="message-field" class="field">
                 </div>
+                <br>
             </div>
-            <div class="eight wide column">
+            <div class="fourteen wide column">
                 <div id="button-row" class="field">
-                    <div id="next-button" class="ui primary right floated button">Next</div>
-                    <div id="prev-button" class="ui primary right floated button">Prev</div>
-                    <div class="ui button right floated instruction-button">Show instructions</div>
+                    <!-- <div id="next-button" class="ui primary right floated button">Next</div>
+                    <div id="prev-button" class="ui primary right floated button">Prev</div> -->
+                    <div id="show-instructions" class="ui button middle text-centered floated instruction-button">Show instructions</div>
                 </div>
             </div>
         </div>
         <div class="top aligned row">
-            <div class="eight wide column"></div>
-            <div class="right aligned eight wide column">
+            <div class="fourteen wide column"></div>
+            <div class="aligned fourteen wide column">
                 <div id="final-task-fields" class="ui form">
                     <div id="feedback-field" class="field">
                         <label>
@@ -173,7 +175,11 @@
                         <textarea id="feedback-input" rows="2"></textarea>
                     </div>
                     <div id="submit-field" class="field">
-                        <div id="submit-button" class="ui green right floated button">Submit</div>
+                        <div id="submit-button" class="ui green floated button">Submit</div>
+                        <!-- <span id="hitNotDoneMessage" class="ui button right floated " style="display:none">
+                          You have not completed the HIT yet as you have not annotated all images. Click Next to go to the next image.
+                          You will be able to click submit when the Next button becomes unclickable and the message "Hit Complete. Please Submit" appears in the interface.
+                        </span> -->
                     </div>
                 </div>
             </div>
@@ -189,6 +195,34 @@
             </form>
         </div>
     </div>
+
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="instructions" class="ui top aligned centered grid">
+            <div class="row">
+                <div class="left aligned fourteen wide column">
+                    <h2>Instructions</h2>
+                    <p><b class="meta-desc"></b></p>
+                    <p class="instructions-simple"></p>
+                    <h3>Guidelines:</h3>
+                    <ol class="instructions-steps">
+                    </ol>
+                    <!-- <div id="sample-task">
+                        <h3>Sample task:</h3>
+                        <div id="instructions-demo"></div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+      </div>
+
+    </div>
+
 </div>
 </body>
 </html>
