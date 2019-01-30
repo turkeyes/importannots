@@ -116,6 +116,12 @@ function prevTask() {
 // }
 
 function toggleInstructions() {
+    if ($("#experiment").css("display") == "None") {
+      $("#experiment").css("display", "flex")
+      $("#experiment").css("visibility", "visible")
+      $("#instructions").css("visibility", "hidden")
+    }
+
     if ($("#experiment").css("visibility") == "hidden") {
         $("#experiment").css("visibility", "visible");
         $("#instructions").css("visibility", "hidden");
