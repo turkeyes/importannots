@@ -149,7 +149,7 @@ var custom = {
             return null;
           } else {
             console.log('HIT invalid, returning error message')
-            var msg = "Can't submit yet!  You have not completed the HIT yet as you have not annotated all images. Click Next to go to the next image. You will be able to click submit when the Next button becomes unclickable and the message 'Hit Complete. Please Submit' appears in the interface";
+            var msg = "Can't submit yet!  You have not completed the HIT yet as you have not annotated all images. Click Next to go to the next image. You will be able to click submit when the Next button becomes unclickable and the message 'Hit Complete. Please Submit' appears in the interface.";
             console.log(msg)
             return msg;
           }
