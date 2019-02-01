@@ -15,7 +15,7 @@
             "Once you are done, click Next to go to the next image.",
             "Repeat the process until all images are annotated. At that point, you can click submit to finish the task."
         ],
-        "images": ["https://cfosco.github.io/mturk-importance/img/example1_importance_labeling.gif"]
+        "images": ["img/example1_importance_labeling.gif","img/imp_labeling_gif_1.gif","img/imp_labeling_gif_2.gif","img/imp_labeling_gif_3.gif"]
     },
     "hitCreation": {
         "title": "Annotate the most important regions on graphic designs",
