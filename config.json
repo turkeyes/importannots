@@ -27,7 +27,7 @@
         "duration": 1200,
         "lifetime": 186400,
         "taskUrl": "https://cfosco.github.io/mturk-importance/",
-        "fold": "fold_info.txt",
+        "fold": "fold_resume.txt",
         "production": true
     },
     "advanced": {
