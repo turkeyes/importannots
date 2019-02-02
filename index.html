@@ -27,6 +27,7 @@
     <!-- INSTRUCTIONS SECTION -->
     <div id="instructions" class="ui top aligned centered grid">
         <div class="row">
+            <!-- INSTRUCTIONS -->
             <div class="left aligned fourteen wide column">
                 <h2>Instructions</h2>
                 <p><b class="meta-desc"></b></p>
@@ -34,7 +35,18 @@
                 <!-- <h3>Guidelines:</h3>
                 <ol class="instructions-steps">
                 </ol> -->
-                <h3>Demo video of a user performing the task:</h3>
+            </div>
+
+            <!-- IMAGES OR GIFS -->
+            <div id="sample-task">
+                    <h3>Sample tasks:</h3>
+                    <div id="instructions-demo"></div>
+
+            </div>
+
+            <!-- SAMPLE VIDEO -->
+            <div id="sample-video">
+            <h3>Demo video of a user performing the task:</h3>
                 <div class="container" style="text-align:center;">
                 <video width="500" height="500" controls>
                   <source src="img/demo_video_importance_labeling_full.mp4" type="video/mp4">
@@ -42,13 +54,10 @@
                 Your browser does not support the video tag.
                 </video>
               </div>
-                <div id="sample-task">
-                    <h3>Sample tasks:</h3>
-                    <div id="instructions-demo"></div>
-
-                </div>
-                <div class="ui primary button right floated continue-button">Continue</div>
             </div>
+
+            <!-- CONTINUE BUTTON -->
+            <div class="ui primary button right floated continue-button">Continue</div>
         </div>
     </div>
     <div class="ui error message subtask" id="hit-not-accepted" style="display:none">You have not yet accepted this HIT. Please accept the HIT before you can see the rest of the task.</div>
