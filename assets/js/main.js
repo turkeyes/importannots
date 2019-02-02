@@ -221,7 +221,7 @@ function populateMetadata(config) {
     }
     $(".disclaimer").html(config.meta.disclaimer);
     if (config.instructions.images.length > 0) {
-        $("#sample-task").css("display", "flex");
+        $("#sample-task").css("display", "block");
         // var instructionsIndex = Math.floor(Math.random() * config.instructions.images.length);
         for (im in config.instructions.images) {
           var imgEle = "<img class='instructions-img' src='";
