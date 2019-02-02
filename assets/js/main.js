@@ -221,11 +221,11 @@ function populateMetadata(config) {
     }
     $(".disclaimer").html(config.meta.disclaimer);
     if (config.instructions.images.length > 0) {
-        $("#sample-task").css("display", "block");
+        $("#sample-task").css("display", "flex");
         // var instructionsIndex = Math.floor(Math.random() * config.instructions.images.length);
         for (im in config.instructions.images) {
           var imgEle = "<img class='instructions-img' src='";
-          imgEle += im + "'></img>";
+          imgEle += config.instructions.images[im] + "'></img>";
           $("#instructions-demo").append($(imgEle));
         }
 
