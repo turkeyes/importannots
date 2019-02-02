@@ -222,10 +222,12 @@ function populateMetadata(config) {
     $(".disclaimer").html(config.meta.disclaimer);
     if (config.instructions.images.length > 0) {
         $("#sample-task").css("display", "block");
-        var instructionsIndex = Math.floor(Math.random() * config.instructions.images.length);
-        var imgEle = "<img class='instructions-img' src='";
-        imgEle += config.instructions.images[instructionsIndex] + "'></img>";
-        $("#instructions-demo").append($(imgEle));
+        // var instructionsIndex = Math.floor(Math.random() * config.instructions.images.length);
+        for (im in config.instructions.images) {
+          var imgEle = "<img class='instructions-img' src='";
+          imgEle += im + "'></img>";
+          $("#instructions-demo").append($(imgEle));
+        }
 
     }
     console.log('TOTAL FOR PROGRESS BAR:',config.meta.numSubtasks + config.advanced.includeDemographicSurvey)
