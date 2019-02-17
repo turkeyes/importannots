@@ -1,4 +1,4 @@
-
+num_imgs_to_label= 0;
 var custom = {
 
     num_imgs_to_label: 0,
@@ -41,6 +41,27 @@ var custom = {
          //
          //  }.bind(this));
          return $.get("").then(function() {
+
+
+           // GETTING NUMBER OF IMAGES IN THIS FOLD
+
+          var rawFile = new XMLHttpRequest();
+          rawFile.onreadystatechange = function ()
+          {
+              if(rawFile.readyState === 4)
+              {
+                  if(rawFile.status === 200 || rawFile.status == 0)
+                  {
+                      var text = rawFile.responseText;
+                      var allLines = text.split(/\r\n|\n/);
+                      num_imgs_to_label = allLines.length
+                      console.log('num_imgs_to_label',num_imgs_to_label)
+                  }
+              }
+          }
+          rawFile.open("GET", 'files/'+config.hitCreation.fold);
+          rawFile.send();
+
             return [];
         });
 
@@ -108,6 +129,7 @@ var custom = {
 
          return strokes;
     },
+
     validateTask: function(taskInput, taskIndex, taskOutput) {
         /*
          * This function should return a falsey value if data stored in taskOutput is valid
@@ -130,29 +152,33 @@ var custom = {
          *    containing a string error message to display.
          */
 
-         console.log('Entering ValidateTask. taskOutput length is:', taskOutput.length)
-         // Checking validity: Task valid only if ALL IMAGES are annotated
-         valid = false
+         // console.log('Entering ValidateTask. taskOutput length is:', taskOutput.length)
+         // console.log('num_imgs_to_label in ValidateTask',num_imgs_to_label)
 
-         if (taskOutput.length >= config.meta.imgsPerFold) {
-           for (i=0; i<taskOutput.length; i++){
-             if (taskOutput[i].split(':')[1].length > 0) {
-               valid = true
-             }
-           }
-       }
+        // Checking validity: Task valid only if ALL IMAGES are annotated
+        valid = false
 
-         console.log('valid:',valid)
 
-         // Return null if task is valid
-          if (valid) {
-            return null;
-          } else {
-            console.log('HIT invalid, returning error message')
-            var msg = "Can't submit yet!  You have not completed the HIT as you have not annotated all images. Click Next to go to the next image. You will be able to Submit when the 'Next' button becomes unclickable and the message 'Hit Complete. Please Submit' appears in the interface.";
-            console.log(msg)
-            return msg;
+        if (taskOutput.length >= num_imgs_to_label) {
+          for (i=0; i<taskOutput.length; i++){
+            if (taskOutput[i].split(':')[1].length > 0) {
+              valid = true
+            }
           }
+        }
+
+        // console.log('valid:',valid)
+
+        // Return null if task is valid
+         if (valid) {
+           return null;
+         } else {
+           console.log('HIT invalid, returning error message')
+           var msg = "Can't submit yet!  You have not completed the HIT as you have not annotated all images. Click Next to go to the next image. You will be able to Submit when the 'Next' button becomes unclickable and the message 'Hit Complete. Please Submit' appears in the interface.";
+           // console.log(msg)
+           return msg;
+         }
+
     }
 };
 
