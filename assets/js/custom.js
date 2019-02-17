@@ -178,7 +178,6 @@ var custom = {
            // console.log(msg)
            return msg;
          }
-
     }
 };
 
