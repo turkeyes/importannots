@@ -21,13 +21,13 @@
         "description": "Manually highlight the important parts of a graphic design. You will be shown a set of 10 images, and you will have to indicate which parts feel important to you.",
         "numTasks": 1,
         "numAssignments": 10,
-        "rewardAmount": "0.90",
+        "rewardAmount": "1.00",
         "keywords": "labeling, importance, highlighting, graphic, designs, images",
         "duration": 1200,
         "lifetime": 186400,
         "taskUrl": "https://cfosco.github.io/mturk-importance/",
-        "fold": "sentinel.txt",
-        "production": false
+        "fold": "sentinel_large.txt",
+        "production": true
     },
     "advanced": {
         "includeDemographicSurvey": false,
