@@ -152,8 +152,8 @@ var custom = {
          *    containing a string error message to display.
          */
 
-         // console.log('Entering ValidateTask. taskOutput length is:', taskOutput.length)
-         // console.log('num_imgs_to_label in ValidateTask',num_imgs_to_label)
+         console.log('Entering ValidateTask. taskOutput length is:', taskOutput.length)
+         console.log('num_imgs_to_label in ValidateTask',num_imgs_to_label)
 
         // Checking validity: Task valid only if ALL IMAGES are annotated
         valid = false
