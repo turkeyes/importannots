@@ -55,6 +55,9 @@ var custom = {
                       var text = rawFile.responseText;
                       var allLines = text.split(/\r\n|\n/);
                       num_imgs_to_label = allLines.length
+                      if (num_imgs_to_label > 24) {
+                        throw "NUM IMGS TO LABEL IS TOO HIGH! REDUCE TO LESS THAN 24";
+                      }
                       console.log('num_imgs_to_label',num_imgs_to_label)
                   }
               }
@@ -119,7 +122,7 @@ var custom = {
         for (i=0; i<NUM_STROKES; i++) {
           stroke_value = document.getElementById('strokes'+i).value
 
-          // console.log('stroke i at CollectData time:', i, stroke_value)
+          console.log('stroke i at CollectData time:', i, stroke_value)
           if (stroke_value != '') {
               // console.log('stroke pushed')
               strokes.push(stroke_value)

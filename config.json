@@ -27,7 +27,7 @@
         "lifetime": 186400,
         "taskUrl": "https://cfosco.github.io/mturk-importance/",
         "fold": "sentinel_large.txt",
-        "production": true
+        "production": false
     },
     "advanced": {
         "includeDemographicSurvey": false,
