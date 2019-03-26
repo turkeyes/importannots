@@ -219,6 +219,7 @@ function getImageTime() {
 function checkStroke(info) {
 
   data = info.split(':')[1].split(',')
+  name_of_img = info.split(':')[0]
   points = data.slice(3)
   console.log('points from checkStroke:',points)
 
