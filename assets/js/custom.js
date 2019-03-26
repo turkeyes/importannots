@@ -185,7 +185,12 @@ var custom = {
 };
 
 function setStrokeInfo(imgNum, info) {
+
+
     console.log('Stroke info:', imgNum, info)
+    // IOU check for stroke info
+    checkStroke(info)
+
     document.getElementById('strokes' + imgNum).value = info;
 
 }
@@ -209,4 +214,12 @@ function modFlashMovie() {
 
 function getImageTime() {
     return '60';
+}
+
+function checkStroke(info) {
+
+  data = info.split(':')[1].split(',')
+  points = data.slice(3)
+  console.log('points from checkStroke:',points)
+
 }
