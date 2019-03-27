@@ -218,9 +218,65 @@ function getImageTime() {
 
 function checkStroke(info) {
 
+  var rawFile = new XMLHttpRequest();
+  rawFile.onreadystatechange = function ()
+  {
+      if(rawFile.readyState === 4)
+      {
+          if(rawFile.status === 200 || rawFile.status == 0)
+          {
+              var text = rawFile.responseText;
+              // var allLines = text.split(/\r\n|\n/);
+              console.log('text of sentinel file in checkstroke:',text)
+              var sentinel_paths = JSON.parse(text)
+              console.log('sentinel paths:', sentinel_paths)
+
+          }
+      }
+  }
+  rawFile.open("GET", 'files/sentinel_paths.json');
+  rawFile.send();
+
+  IOU_THRESH = 0.5
+
   data = info.split(':')[1].split(',')
   name_of_img = info.split(':')[0]
-  points = data.slice(3)
-  console.log('points from checkStroke:',points)
 
+  // Get points from user
+  pts = data.slice(3)
+  console.log('points from checkStroke:',pts)
+
+  // If img is sentinel, get sentinel points
+  if (name_of_img in list_of_sentinels) {
+    // TODO
+  }
+
+  // Calculate IoU
+  iou = get_iou(pts, sentinel_pts)
+
+  // If no selection on an image, increase counter
+  // TODO
+
+  if (iou < IOU_THRESH) {
+    // blockUser()
+  }
+
+
+}
+
+function block_user() {
+  // if (notQualified == true) { //failed to pass the consent form
+  //    $("<input type='hidden' name='consentForm' value='notQualified'>");
+  //    $(formSelector).submit();
+  //    return;
+  // }
+
+}
+
+function get_iou(pts1, pts2) {
+  let path1 = paper. Path(pts1);
+  let path2 = paper. Path(pts2);
+  let intersection = path1.intersect(path2);
+  let union = path1.union(path2);
+  let ret = intersection.area/union.area;
 }
