@@ -189,7 +189,7 @@ function setStrokeInfo(imgNum, info) {
 
     console.log('Stroke info:', imgNum, info)
     // IOU check for stroke info
-    checkStroke(info)
+    // checkStroke(info)
 
     document.getElementById('strokes' + imgNum).value = info;
 
