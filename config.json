@@ -27,8 +27,8 @@
         "duration": 1200,
         "lifetime": 186400,
         "taskUrl": "https://cfosco.github.io/mturk-importance/",
-        "fold": "fold_graphs_test.txt",
-        "production": true
+        "fold": "sentinel1.txt",
+        "production": false
     },
 
     "advanced": {
