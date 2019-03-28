@@ -40,6 +40,9 @@ var custom = {
          //    return this.images_to_label;
          //
          //  }.bind(this));
+
+         paper.setup();
+
          return $.get("").then(function() {
 
 
@@ -190,7 +193,7 @@ function setStrokeInfo(imgNum, info) {
 
     console.log('Stroke info:', imgNum, info)
     // IOU check for stroke info
-    // checkStroke(info)
+    checkStroke(info)
 
     document.getElementById('strokes' + imgNum).value = info;
 
@@ -219,64 +222,37 @@ function getImageTime() {
 
 function checkStroke(info) {
 
-  // var rawFile = new XMLHttpRequest();
-  // rawFile.onreadystatechange = function ()
-  // {
-  //     if(rawFile.readyState === 4)
-  //     {
-  //         if(rawFile.status === 200 || rawFile.status == 0)
-  //         {
-  //             var text = rawFile.responseText;
-  //             // var allLines = text.split(/\r\n|\n/);
-  //             console.log('text of sentinel file in checkstroke:',text)
-  //             var sentinel_paths = JSON.parse(text)
-  //             console.log('sentinel paths:', sentinel_paths)
-  //
-  //         }
-  //     }
-  // }
-  // rawFile.open("GET", 'files/sentinel_paths.json');
-  // rawFile.send();
-
-  console.log('CHECKSTROKE CALLED', info)
+  console.log('CHECKSTROKE CALLED WITH INFO:', info)
 
   $.getJSON("jsons/sentinel_pts.json", function(sentinel_json) {
-    console.log("sentinel_pts['sentinel1.PNG']", sentinel_json['sentinel1.PNG']);
 
     IOU_THRESH = 0.55
-    // console.log('info:', info)
+
     data = info.split(':')[2].split(';')[0].split(',')
     url_split = info.split(':')[1].split('/')
     name_of_img = url_split[url_split.length-1].split('?')[0]
     console.log('name_of_img',name_of_img)
-    // console.log('DATA EXTRCATED FROM INFO:', data)
 
     // Get points from user
     pts = data.slice(3).map(d=>parseFloat(d));
-    // console.log('points from checkStroke:',pts)
-    // list_of_sentinels = ['sentinel_notext9.png','sentinel_notext17.PNG']
 
-	// If img is sentinel, get sentinel points and calculate IoU
-	if (sentinel_json[name_of_img]){
-		let sentinel_pts = sentinel_json[name_of_img];
-		
-		// Calculate IoU
-		let pair = points =>{
-			let pairs = [];
-			for (let i=1; i<points.length; i++){
-				pairs.push([points[i-1], points[i]]);
-			}
-			return pairs;
-		}
-		let iou = get_iou(pair(pts), pair(sentinel_pts));
-		console.log('iou', iou);
+	   // If img is sentinel, get sentinel points and calculate IoU
+  	if (sentinel_json[name_of_img]){
+    		let sentinel_pts = sentinel_json[name_of_img];
+        console.time('iou_pairs')
+    		let iou_p = get_iou_pairs(pts, sentinel_pts);
+        console.timeEnd('iou_pairs')
+        console.time('iou_str')
+        let iou = get_iou(pts, sentinel_pts)
+        console.timeEnd('iou_str')
+    		console.log('iou, iou_pairs', iou, iou_p);
 
-		if (iou < IOU_THRESH) {
-			blockUser()
-		}
+    		if (iou < IOU_THRESH) {
+    			blockUser()
+    		}
 
-	}
-	
+	   }
+
     // If no selection on an image, increase counter
     // TODO
 
@@ -322,8 +298,17 @@ function block_user() {
 
 }
 
-function get_iou(pts1, pts2) {
-	paper.setup();
+function get_iou_pairs(pts1, pts2) {
+  // Calculate IoU
+  let pair = points =>{
+  	let pairs = [];
+  	for (let i=1; i<points.length; i+=2){
+  		pairs.push([points[i-1], points[i]]);
+  	}
+  	return pairs;
+  }
+  pts1 = pair(pts1)
+  pts2 = pair(pts2)
 	let path1 = new paper.Path(pts1);
 	let path2 = new paper.Path(pts2);
 	let intersection = path1.intersect(path2);
