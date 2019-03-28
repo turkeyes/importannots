@@ -239,13 +239,10 @@ function checkStroke(info) {
 	   // If img is sentinel, get sentinel points and calculate IoU
   	if (sentinel_json[name_of_img]){
     		let sentinel_pts = sentinel_json[name_of_img];
-        console.time('iou_pairs')
-    		let iou_p = get_iou_pairs(pts, sentinel_pts);
-        console.timeEnd('iou_pairs')
+
         console.time('iou_str')
         let iou = get_iou(pts, sentinel_pts)
         console.timeEnd('iou_str')
-    		console.log('iou, iou_pairs', iou, iou_p);
 
     		if (iou < IOU_THRESH) {
     			blockUser()
@@ -261,28 +258,6 @@ function checkStroke(info) {
 }
 
 
-function get_iou(pts1, pts2) {
-  console.log('Types of pts1, sentinel_pts:')
-  console.log(typeof pts1)
-  console.log(typeof pts2)
-  console.log('pts1.length',pts1.length)
-  console.log('sentinel_pts.length',pts2.length)
-  console.log('pts1','M'+pts1.join()+'z')
-  console.log('sentinel_pts','M'+pts2.join()+'z')
-
-  str_pts1 = 'M'+pts1.join()+'z'
-  str_pts2 = 'M'+pts2.join()+'z'
-
-  var path1 = new paper.Path(str_pts1);
-  var path2 = new paper.Path(str_pts2);
-  var union = path1.unite(path2);
-  var intersection = path1.intersect(path2);
-  var ret = intersection.area/union.area;
-
-  console.log('------ Calculated IoU:', ret)
-  return ret
-}
-
 function block_user() {
 
   console.log('USER SHOULD BE BLOCKED')
@@ -297,6 +272,30 @@ function block_user() {
   // }
 
 }
+
+
+function get_iou(pts1, pts2) {
+  // console.log('Types of pts1, sentinel_pts:')
+  // console.log(typeof pts1)
+  // console.log(typeof pts2)
+  // console.log('pts1.length',pts1.length)
+  // console.log('sentinel_pts.length',pts2.length)
+  // console.log('pts1','M'+pts1.join()+'z')
+  // console.log('sentinel_pts','M'+pts2.join()+'z')
+
+  str_pts1 = 'M'+pts1.join()+'z'
+  str_pts2 = 'M'+pts2.join()+'z'
+
+  var path1 = new paper.Path(str_pts1);
+  var path2 = new paper.Path(str_pts2);
+  var union = path1.unite(path2);
+  var intersection = path1.intersect(path2);
+  var ret = intersection.area/union.area;
+
+  console.log('------ Calculated IoU:', ret)
+  return ret
+}
+
 
 function get_iou_pairs(pts1, pts2) {
   // Calculate IoU
@@ -314,4 +313,27 @@ function get_iou_pairs(pts1, pts2) {
 	let intersection = path1.intersect(path2);
 	let union = path1.unite(path2);
 	return intersection.area/union.area;
+
+}
+
+function visualize_paths(pts1, pts2) {
+	console.log(pts1, pts2);
+	paper.setup(document.getElementById('myCanvas'));
+
+	let path1 = new paper.Path({
+		segments:pts1,
+		fillColor:'red',
+		opacity:0.5,
+		closed:true
+	});
+	let path2 = new paper.Path({
+		segments:pts2,
+		fillColor:'blue',
+		opacity:0.5,
+		closed:true
+
+	});
+
+	console.log(path1, path2)
+
 }
