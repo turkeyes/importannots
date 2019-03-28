@@ -238,7 +238,7 @@ function checkStroke(info) {
   // rawFile.open("GET", 'files/sentinel_paths.json');
   // rawFile.send();
 
-  console.log('CHECKSTROKE CALLED')
+  console.log('CHECKSTROKE CALLED', info)
 
   $.getJSON("jsons/sentinel_pts.json", function(sentinel_json) {
     console.log("sentinel_pts['sentinel1.PNG']", sentinel_json['sentinel1.PNG']);
@@ -249,29 +249,34 @@ function checkStroke(info) {
     url_split = info.split(':')[1].split('/')
     name_of_img = url_split[url_split.length-1].split('?')[0]
     console.log('name_of_img',name_of_img)
-    console.log('DATA EXTRCATED FROM INFO:', data)
+    // console.log('DATA EXTRCATED FROM INFO:', data)
 
     // Get points from user
-    pts = data.slice(3)
-    console.log('points from checkStroke:',pts)
-
+    pts = data.slice(3).map(d=>parseInt(d));
+    // console.log('points from checkStroke:',pts)
     // list_of_sentinels = ['sentinel_notext9.png','sentinel_notext17.PNG']
 
-    // If img is sentinel, get sentinel points and calculate IoU
-    if (name_of_img in sentinel_json) {
-          // Get sentinel pts
-          sentinel_pts = sentinel_json[name_pf_img]
+	// If img is sentinel, get sentinel points and calculate IoU
+	if (sentinel_json[name_of_img]){
+		let sentinel_pts = sentinel_json[name_of_img];
+		
+		// Calculate IoU
+		let pair = points =>{
+			let pairs = [];
+			for (let i=1; i<points.length; i++){
+				pairs.push([points[i-1], points[i]]);
+			}
+			return pairs;
+		}
+		let iou = get_iou(pair(pts), pair(sentinel_pts));
+		console.log('iou', iou);
 
+		if (iou < IOU_THRESH) {
+		// blockUser()
+		}
 
-          // Calculate IoU
-          iou = get_iou(pts, sentinel_pts)
-
-          if (iou < IOU_THRESH) {
-            // blockUser()
-          }
-    }
-
-
+	}
+	
     // If no selection on an image, increase counter
     // TODO
 
@@ -296,9 +301,10 @@ function block_user() {
 }
 
 function get_iou(pts1, pts2) {
-  let path1 = paper. Path(pts1);
-  let path2 = paper. Path(pts2);
-  let intersection = path1.intersect(path2);
-  let union = path1.union(path2);
-  let ret = intersection.area/union.area;
+	paper.setup();
+	let path1 = new paper.Path(pts1);
+	let path2 = new paper.Path(pts2);
+	let intersection = path1.intersect(path2);
+	let union = path1.unite(path2);
+	return intersection.area/union.area;
 }
