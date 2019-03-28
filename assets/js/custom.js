@@ -66,7 +66,7 @@ var custom = {
                   }
               }
           }
-          rawFile.open("GET", 'files/'+config.hitCreation.fold);
+          rawFile.open("GET", 'files/'+gup('url'));
           rawFile.send();
 
             return [];
