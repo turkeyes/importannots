@@ -219,26 +219,30 @@ function getImageTime() {
 
 function checkStroke(info) {
 
-  var rawFile = new XMLHttpRequest();
-  rawFile.onreadystatechange = function ()
-  {
-      if(rawFile.readyState === 4)
-      {
-          if(rawFile.status === 200 || rawFile.status == 0)
-          {
-              var text = rawFile.responseText;
-              // var allLines = text.split(/\r\n|\n/);
-              console.log('text of sentinel file in checkstroke:',text)
-              var sentinel_paths = JSON.parse(text)
-              console.log('sentinel paths:', sentinel_paths)
+  // var rawFile = new XMLHttpRequest();
+  // rawFile.onreadystatechange = function ()
+  // {
+  //     if(rawFile.readyState === 4)
+  //     {
+  //         if(rawFile.status === 200 || rawFile.status == 0)
+  //         {
+  //             var text = rawFile.responseText;
+  //             // var allLines = text.split(/\r\n|\n/);
+  //             console.log('text of sentinel file in checkstroke:',text)
+  //             var sentinel_paths = JSON.parse(text)
+  //             console.log('sentinel paths:', sentinel_paths)
+  //
+  //         }
+  //     }
+  // }
+  // rawFile.open("GET", 'files/sentinel_paths.json');
+  // rawFile.send();
 
-          }
-      }
-  }
-  rawFile.open("GET", 'files/sentinel_paths.json');
-  rawFile.send();
+  $.getJSON("jsons/sentinel_pts.json", function(json) {
+    console.log(json); // this will show the info it in firebug console
+  });
 
-  IOU_THRESH = 0.5
+  IOU_THRESH = 0.55
 
   data = info.split(':')[1].split(',')
   name_of_img = info.split(':')[0]
@@ -249,7 +253,7 @@ function checkStroke(info) {
 
   // If img is sentinel, get sentinel points
   if (name_of_img in list_of_sentinels) {
-    // TODO
+
   }
 
   // Calculate IoU
