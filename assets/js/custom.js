@@ -190,7 +190,7 @@ function setStrokeInfo(imgNum, info) {
 
     console.log('Stroke info:', imgNum, info)
     // IOU check for stroke info
-    // checkStroke(info)
+    checkStroke(info)
 
     document.getElementById('strokes' + imgNum).value = info;
 
@@ -238,33 +238,50 @@ function checkStroke(info) {
   // rawFile.open("GET", 'files/sentinel_paths.json');
   // rawFile.send();
 
-  $.getJSON("jsons/sentinel_pts.json", function(json) {
-    console.log(json); // this will show the info it in firebug console
+  console.log('CHECKSTROKE CALLED')
+
+  $.getJSON("jsons/sentinel_pts.json", function(sentinel_json) {
+    console.log("sentinel_pts['sentinel1.PNG']", sentinel_json['sentinel1.PNG']);
+
+    IOU_THRESH = 0.55
+    console.log('info:', info)
+    data = info.split(':')[2].split(',')
+    url_split = info.split(':')[1].split('/')
+    name_of_img = url_split[url_split.length-1].split('?')[0]
+    console.log('name_of_img',name_of_img)
+    console.log('DATA EXTRCATED FROM INFO:', data)
+
+    // Get points from user
+    pts = data.slice(3)
+    console.log('points from checkStroke:',pts)
+
+    // list_of_sentinels = ['sentinel_notext9.png','sentinel_notext17.PNG']
+
+    // If img is sentinel, get sentinel points and calculate IoU
+    if (name_of_img in sentinel_json) {
+          // Get sentinel pts
+          sentinel_pts = sentinel_json[name_pf_img]
+
+
+          // Calculate IoU
+          iou = get_iou(pts, sentinel_pts)
+
+          if (iou < IOU_THRESH) {
+            // blockUser()
+          }
+    }
+
+
+    // If no selection on an image, increase counter
+    // TODO
+
+
+
+
+
   });
 
-  IOU_THRESH = 0.55
 
-  data = info.split(':')[1].split(',')
-  name_of_img = info.split(':')[0]
-
-  // Get points from user
-  pts = data.slice(3)
-  console.log('points from checkStroke:',pts)
-
-  // If img is sentinel, get sentinel points
-  if (name_of_img in list_of_sentinels) {
-
-  }
-
-  // Calculate IoU
-  iou = get_iou(pts, sentinel_pts)
-
-  // If no selection on an image, increase counter
-  // TODO
-
-  if (iou < IOU_THRESH) {
-    // blockUser()
-  }
 
 
 }
