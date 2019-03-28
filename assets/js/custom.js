@@ -190,7 +190,7 @@ function setStrokeInfo(imgNum, info) {
 
     console.log('Stroke info:', imgNum, info)
     // IOU check for stroke info
-    // checkStroke(info)
+    checkStroke(info)
 
     document.getElementById('strokes' + imgNum).value = info;
 
@@ -272,7 +272,7 @@ function checkStroke(info) {
 		console.log('iou', iou);
 
 		if (iou < IOU_THRESH) {
-			blockUser()
+			block_user()
 		}
 
 	}
