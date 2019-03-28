@@ -193,7 +193,7 @@ function setStrokeInfo(imgNum, info) {
 
     console.log('Stroke info:', imgNum, info)
     // IOU check for stroke info
-    checkStroke(info)
+    // checkStroke(info)
 
     document.getElementById('strokes' + imgNum).value = info;
 
@@ -222,7 +222,7 @@ function getImageTime() {
 
 function checkStroke(info) {
 
-  console.log('CHECKSTROKE CALLED WITH INFO:', info)
+  // console.log('CHECKSTROKE CALLED WITH INFO:', info)
 
   $.getJSON("jsons/sentinel_pts.json", function(sentinel_json) {
 
@@ -231,7 +231,9 @@ function checkStroke(info) {
     data = info.split(':')[2].split(';')[0].split(',')
     url_split = info.split(':')[1].split('/')
     name_of_img = url_split[url_split.length-1].split('?')[0]
-    console.log('name_of_img',name_of_img)
+    img_w = parseInt(info.split(',')[0])
+    img_h = parseInt(info.split(',')[1])
+    console.log('name_of_img, img_w, img_h',name_of_img, img_w, img_h)
 
     // Get points from user
     pts = data.slice(3).map(d=>parseFloat(d));
@@ -240,9 +242,14 @@ function checkStroke(info) {
   	if (sentinel_json[name_of_img]){
     		let sentinel_pts = sentinel_json[name_of_img];
 
+        sentinel_pts = sentinel_pts.map(e => {return e+10})
+
         console.time('iou_str')
-        let iou = get_iou(pts, sentinel_pts)
+        let iou = get_iou(pts, sentinel_pts, weighted=true, img_w=img_w, img_h=img_h)
         console.timeEnd('iou_str')
+
+        console.log('Visualizing paths')
+        visualize_paths(pts, sentinel_pts)
 
     		if (iou < IOU_THRESH) {
     			blockUser()
@@ -274,7 +281,11 @@ function block_user() {
 }
 
 
-function get_iou(pts1, pts2) {
+function sigmoid(x) {
+  return 1 / (1 + Math.exp(-x))
+}
+
+function get_iou(pts1, pts2, weighted=true, img_w=null, img_h=null) {
   // console.log('Types of pts1, sentinel_pts:')
   // console.log(typeof pts1)
   // console.log(typeof pts2)
@@ -290,10 +301,22 @@ function get_iou(pts1, pts2) {
   var path2 = new paper.Path(str_pts2);
   var union = path1.unite(path2);
   var intersection = path1.intersect(path2);
-  var ret = intersection.area/union.area;
+  var iou = intersection.area/union.area;
 
-  console.log('------ Calculated IoU:', ret)
-  return ret
+
+  console.log('------ Calculated IoU:', iou)
+  if (weighted) {
+    gt_area = -path2.area
+    console.log('------ gt area:', gt_area)
+    full_area = img_w*img_h
+    console.log('------ full area:', full_area)
+    weight = sigmoid(0.35*full_area/(gt_area+1)-7)
+    iou = iou + 0.1*weight
+  }
+
+  console.log('------ WEIGHT:', weight)
+  console.log('------ WEIGHTED IoU:', iou)
+  return iou
 }
 
 
@@ -317,7 +340,19 @@ function get_iou_pairs(pts1, pts2) {
 }
 
 function visualize_paths(pts1, pts2) {
-	console.log(pts1, pts2);
+  let pair = points =>{
+    let pairs = [];
+    for (let i=1; i<points.length; i+=2){
+      pairs.push([points[i-1], points[i]]);
+    }
+    return pairs;
+  }
+  pts1 = pair(pts1)
+  pts2 = pair(pts2)
+
+  // pts1 = 'M'+pts1.join()+'z'
+  // pts2 = 'M'+pts2.join()+'z'
+
 	paper.setup(document.getElementById('myCanvas'));
 
 	let path1 = new paper.Path({
