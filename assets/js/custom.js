@@ -249,7 +249,7 @@ function checkStroke(info) {
         console.timeEnd('iou_str')
 
         console.log('Visualizing paths')
-        visualize_paths(pts, sentinel_pts)
+        // visualize_paths(pts, sentinel_pts)
 
     		if (iou < IOU_THRESH) {
     			blockUser()
