@@ -261,9 +261,10 @@ function checkStroke(info) {
 		let sentinel_pts = sentinel_json[name_of_img];
 		
 		// Calculate IoU
+		console.log(pts, sentinel_pts);
 		let pair = points =>{
 			let pairs = [];
-			for (let i=1; i<points.length; i++){
+			for (let i=1; i<points.length; i+=2){
 				pairs.push([points[i-1], points[i]]);
 			}
 			return pairs;
@@ -323,10 +324,27 @@ function block_user() {
 }
 
 function get_iou(pts1, pts2) {
-	paper.setup();
-	let path1 = new paper.Path(pts1);
-	let path2 = new paper.Path(pts2);
-	let intersection = path1.intersect(path2);
-	let union = path1.unite(path2);
-	return intersection.area/union.area;
+	console.log(pts1, pts2);
+	paper.setup(document.getElementById('myCanvas'));
+	
+	let path1 = new paper.Path({
+		segments:pts1,
+		fillColor:'red',
+		opacity:0.5,
+		closed:true
+	});
+	let path2 = new paper.Path({
+		segments:pts2,
+		fillColor:'blue',
+		opacity:0.5,
+		closed:true
+
+	});
+	
+	console.log(path1, path2)
+	console.time('IOU');
+	// let intersection = path1.intersect(path2);
+	// let union = path1.unite(path2);
+	// console.timeEnd();
+	// return intersection.area/union.area;
 }
