@@ -190,7 +190,7 @@ function setStrokeInfo(imgNum, info) {
 
     console.log('Stroke info:', imgNum, info)
     // IOU check for stroke info
-    checkStroke(info)
+    // checkStroke(info)
 
     document.getElementById('strokes' + imgNum).value = info;
 
@@ -244,15 +244,15 @@ function checkStroke(info) {
     console.log("sentinel_pts['sentinel1.PNG']", sentinel_json['sentinel1.PNG']);
 
     IOU_THRESH = 0.55
-    console.log('info:', info)
-    data = info.split(':')[2].split(',')
+    // console.log('info:', info)
+    data = info.split(':')[2].split(';')[0].split(',')
     url_split = info.split(':')[1].split('/')
     name_of_img = url_split[url_split.length-1].split('?')[0]
     console.log('name_of_img',name_of_img)
     // console.log('DATA EXTRCATED FROM INFO:', data)
 
     // Get points from user
-    pts = data.slice(3).map(d=>parseInt(d));
+    pts = data.slice(3).map(d=>parseFloat(d));
     // console.log('points from checkStroke:',pts)
     // list_of_sentinels = ['sentinel_notext9.png','sentinel_notext17.PNG']
 
@@ -272,7 +272,7 @@ function checkStroke(info) {
 		console.log('iou', iou);
 
 		if (iou < IOU_THRESH) {
-		// blockUser()
+			blockUser()
 		}
 
 	}
@@ -280,18 +280,40 @@ function checkStroke(info) {
     // If no selection on an image, increase counter
     // TODO
 
-
-
-
-
   });
-
-
-
 
 }
 
+
+function get_iou(pts1, pts2) {
+  console.log('Types of pts1, sentinel_pts:')
+  console.log(typeof pts1)
+  console.log(typeof pts2)
+  console.log('pts1.length',pts1.length)
+  console.log('sentinel_pts.length',pts2.length)
+  console.log('pts1','M'+pts1.join()+'z')
+  console.log('sentinel_pts','M'+pts2.join()+'z')
+
+  str_pts1 = 'M'+pts1.join()+'z'
+  str_pts2 = 'M'+pts2.join()+'z'
+
+  var path1 = new paper.Path(str_pts1);
+  var path2 = new paper.Path(str_pts2);
+  var union = path1.unite(path2);
+  var intersection = path1.intersect(path2);
+  var ret = intersection.area/union.area;
+
+  console.log('------ Calculated IoU:', ret)
+  return ret
+}
+
 function block_user() {
+
+  console.log('USER SHOULD BE BLOCKED')
+
+  // Show message that forces them to reload
+
+
   // if (notQualified == true) { //failed to pass the consent form
   //    $("<input type='hidden' name='consentForm' value='notQualified'>");
   //    $(formSelector).submit();
