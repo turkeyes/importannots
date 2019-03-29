@@ -265,12 +265,20 @@ function checkStroke(info) {
 }
 
 
-function block_user() {
+function blockUser() {
 
   console.log('USER SHOULD BE BLOCKED')
 
-  // Show message that forces them to reload
 
+  $('#experiment').hide();
+  $("#submit-button").addClass("disabled");
+  $("#submit-button").hide();
+  $("#feedback-input").hide();
+  $('#fail-msg').css("font-size", "1.8em");
+  $('#fail-msg').show();
+
+
+  // Show message that forces them to reload
 
   // if (notQualified == true) { //failed to pass the consent form
   //    $("<input type='hidden' name='consentForm' value='notQualified'>");
