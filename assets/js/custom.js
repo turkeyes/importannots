@@ -242,6 +242,7 @@ function checkStroke(info) {
 
 	   // If img is sentinel, get sentinel points and calculate IoU
   	if (sentinel_json[name_of_img]){
+        console.log('IMAGE IS SENTINEL')
     		let sentinel_pts = sentinel_json[name_of_img];
 
         sentinel_pts = sentinel_pts.map(e => {return e+10})
