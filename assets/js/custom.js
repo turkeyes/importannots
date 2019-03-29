@@ -251,9 +251,10 @@ function checkStroke(info) {
 
         // console.log('Visualizing paths')
         // visualize_paths(pts, sentinel_pts)
-
+        console.log('IoU:', iou)
     		if (iou < IOU_THRESH) {
           failed_sentinels+=1
+          console.log('Sentinel check failed. counter is now:', failed_sentinels)
           if (failed_sentinels > MAX_FAILURES_ALLOWED) {
       			blockUser()
           }
