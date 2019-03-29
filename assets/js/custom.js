@@ -242,7 +242,7 @@ function checkStroke(info) {
 
 	   // If img is sentinel, get sentinel points and calculate IoU
   	if (sentinel_json[name_of_img]){
-        console.log('IMAGE IS SENTINEL')
+        // console.log('IMAGE IS SENTINEL')
     		let sentinel_pts = sentinel_json[name_of_img];
 
         sentinel_pts = sentinel_pts.map(e => {return e+10})
@@ -251,10 +251,10 @@ function checkStroke(info) {
 
         // console.log('Visualizing paths')
         // visualize_paths(pts, sentinel_pts)
-        console.log('IoU:', iou)
+        // console.log('IoU:', iou)
     		if (iou < IOU_THRESH) {
           failed_sentinels+=1
-          console.log('Sentinel check failed. counter is now:', failed_sentinels)
+          // console.log('Sentinel check failed. counter is now:', failed_sentinels)
           if (failed_sentinels > MAX_FAILURES_ALLOWED) {
       			blockUser()
           }
