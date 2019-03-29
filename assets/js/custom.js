@@ -1,4 +1,5 @@
 num_imgs_to_label= 0;
+failed_sentinels=0
 var custom = {
 
     num_imgs_to_label: 0,
@@ -193,7 +194,7 @@ function setStrokeInfo(imgNum, info) {
 
     console.log('Stroke info:', imgNum, info)
     // IOU check for stroke info
-    // checkStroke(info)
+    checkStroke(info)
 
     document.getElementById('strokes' + imgNum).value = info;
 
@@ -227,13 +228,14 @@ function checkStroke(info) {
   $.getJSON("jsons/sentinel_pts.json", function(sentinel_json) {
 
     IOU_THRESH = 0.55
+    MAX_FAILURES_ALLOWED = 1
 
     data = info.split(':')[2].split(';')[0].split(',')
     url_split = info.split(':')[1].split('/')
     name_of_img = url_split[url_split.length-1].split('?')[0]
     img_w = parseInt(info.split(',')[0])
     img_h = parseInt(info.split(',')[1])
-    console.log('name_of_img, img_w, img_h',name_of_img, img_w, img_h)
+    // console.log('name_of_img, img_w, img_h',name_of_img, img_w, img_h)
 
     // Get points from user
     pts = data.slice(3).map(d=>parseFloat(d));
@@ -244,15 +246,16 @@ function checkStroke(info) {
 
         sentinel_pts = sentinel_pts.map(e => {return e+10})
 
-        console.time('iou_str')
         let iou = get_iou(pts, sentinel_pts, weighted=true, img_w=img_w, img_h=img_h)
-        console.timeEnd('iou_str')
 
-        console.log('Visualizing paths')
+        // console.log('Visualizing paths')
         // visualize_paths(pts, sentinel_pts)
 
     		if (iou < IOU_THRESH) {
-    			blockUser()
+          failed_sentinels+=1
+          if (failed_sentinels > MAX_FAILURES_ALLOWED) {
+      			blockUser()
+          }
     		}
 
 	   }
@@ -312,18 +315,18 @@ function get_iou(pts1, pts2, weighted=true, img_w=null, img_h=null) {
   var iou = intersection.area/union.area;
 
 
-  console.log('------ Calculated IoU:', iou)
+  // console.log('------ Calculated IoU:', iou)
   if (weighted) {
     gt_area = -path2.area
-    console.log('------ gt area:', gt_area)
+    // console.log('------ gt area:', gt_area)
     full_area = img_w*img_h
-    console.log('------ full area:', full_area)
+    // console.log('------ full area:', full_area)
     weight = sigmoid(0.35*full_area/(gt_area+1)-7)
     iou = iou + 0.1*weight
   }
 
-  console.log('------ WEIGHT:', weight)
-  console.log('------ WEIGHTED IoU:', iou)
+  // console.log('------ WEIGHT:', weight)
+  // console.log('------ WEIGHTED IoU:', iou)
   return iou
 }
 
