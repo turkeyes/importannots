@@ -240,10 +240,10 @@ function checkStroke(info) {
     // console.log('name_of_img, img_w, img_h',name_of_img, img_w, img_h)
 
     // If no selection on an image, increase counter
-    console.log('Checking nostroke with data:', data, data.length)
+    // console.log('Checking nostroke with data:', data, data.length)
     if (data === undefined || data.length == 1) {
       no_stroke_counter+=1
-      console.log('No stroke found for this image. Counter is now:', no_stroke_counter)
+      // console.log('No stroke found for this image. Counter is now:', no_stroke_counter)
       if (no_stroke_counter > MAX_NOSTROKE_ALLOWED) {
         blockUser()
         return;
@@ -285,7 +285,7 @@ function checkStroke(info) {
 
 function blockUser() {
 
-  console.log('USER SHOULD BE BLOCKED')
+  // console.log('USER SHOULD BE BLOCKED')
 
 
   $('#experiment').hide();
