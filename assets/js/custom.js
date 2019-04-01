@@ -220,7 +220,7 @@ function modFlashMovie() {
 
 
 function getImageTime() {
-    return '60';
+    return '120';
 }
 
 function checkStroke(info) {
