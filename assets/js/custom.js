@@ -239,6 +239,17 @@ function checkStroke(info) {
     img_h = parseInt(info.split(',')[1])
     // console.log('name_of_img, img_w, img_h',name_of_img, img_w, img_h)
 
+    // If no selection on an image, increase counter
+    console.log('Checking nostroke')
+    if (data === undefined || data.length == 0) {
+      no_stroke_counter+=1
+      console.log('No stroke found for this image. Counter is now:', no_stroke_counter)
+      if (no_stroke_counter > MAX_NOSTROKE_ALLOWED) {
+        blockUser()
+        return;
+      }
+    }
+
     // Get points from user
     pts = data.slice(3).map(d=>parseFloat(d));
 
@@ -259,20 +270,13 @@ function checkStroke(info) {
           // console.log('Sentinel check failed. counter is now:', failed_sentinels)
           if (failed_sentinels > MAX_FAILURES_ALLOWED) {
       			blockUser()
+            return;
           }
     		}
 
 	   }
 
-    // If no selection on an image, increase counter
-    console.log('Checking nostroke')
-    if (data === undefined || data.length == 0) {
-      no_stroke_counter+=1
-      console.log('No stroke found for this image. Counter is now:', no_stroke_counter)
-      if (no_stroke_counter > MAX_NOSTROKE_ALLOWED) {
-        blockUser()
-      }
-    }
+
 
   });
 
