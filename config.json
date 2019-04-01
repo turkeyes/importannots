@@ -27,7 +27,7 @@
         "duration": 1200,
         "lifetime": 186400,
         "taskUrl": "https://cfosco.github.io/mturk-importance/",
-        "fold": "imp600_ads_0.txt",
+        "fold": "imp600_mobile_uis_17.txt",
         "production": false
     },
 
