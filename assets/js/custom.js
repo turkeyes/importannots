@@ -1,5 +1,6 @@
 num_imgs_to_label= 0;
-failed_sentinels=0
+failed_sentinels=0;
+no_stroke_counter=0;
 var custom = {
 
     num_imgs_to_label: 0,
@@ -229,6 +230,7 @@ function checkStroke(info) {
 
     IOU_THRESH = 0.55
     MAX_FAILURES_ALLOWED = 1
+    MAX_NOSTROKE_ALLOWED = 2
 
     data = info.split(':')[2].split(';')[0].split(',')
     url_split = info.split(':')[1].split('/')
@@ -263,7 +265,13 @@ function checkStroke(info) {
 	   }
 
     // If no selection on an image, increase counter
-    // TODO
+    if (data === undefined || data.length == 0) {
+      no_stroke_counter+=1
+      console.log('No stroke found for this image. Counter is now:', no_stroke_counter)
+      if (no_stroke_counter > MAX_NOSTROKE_ALLOWED) {
+        blockUser()
+      }
+    }
 
   });
 
