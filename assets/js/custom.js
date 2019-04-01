@@ -240,7 +240,7 @@ function checkStroke(info) {
     // console.log('name_of_img, img_w, img_h',name_of_img, img_w, img_h)
 
     // If no selection on an image, increase counter
-    console.log('Checking nostroke')
+    console.log('Checking nostroke with data:', data)
     if (data === undefined || data.length == 0) {
       no_stroke_counter+=1
       console.log('No stroke found for this image. Counter is now:', no_stroke_counter)
