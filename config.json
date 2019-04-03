@@ -1,7 +1,7 @@
 {
     "meta": {
         "title": "Annotate the most important regions on graphic designs",
-        "description": "Manually highlight the important parts of a graphic design. You will be shown a set of 12 images, and you will have to indicate which parts feel important to you.",
+        "description": "Manually highlight the important parts of a graphic design. You will be shown a set of 10 to 15 images, and you will have to indicate which parts feel important to you.",
         "numSubtasks": 1,
         "disclaimer": "This is a disclaimer. You are participating in this experiment voluntarily.",
         "aggregate": false
@@ -19,7 +19,7 @@
 
     "hitCreation": {
         "title": "Annotate the most important regions on graphic designs",
-        "description": "Manually highlight the important parts of a graphic design. You will be shown a set of 10 images, and you will have to indicate which parts feel important to you.",
+        "description": "Manually highlight the important parts of a graphic design. You will be shown a set of 10 to 15 images, and you will have to indicate which parts feel important to you.",
         "numTasks": 1,
         "numAssignments": 30,
         "rewardAmount": "0.85",
