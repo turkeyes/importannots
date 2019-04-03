@@ -28,7 +28,7 @@
         "lifetime": 186400,
         "taskUrl": "https://cfosco.github.io/mturk-importance/",
         "fold": "info50_text_0.txt",
-        "production": true
+        "production": false
     },
 
     "advanced": {
