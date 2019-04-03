@@ -21,14 +21,14 @@
         "title": "Annotate the most important regions on graphic designs",
         "description": "Manually highlight the important parts of a graphic design. You will be shown a set of 10 images, and you will have to indicate which parts feel important to you.",
         "numTasks": 1,
-        "numAssignments": 1,
+        "numAssignments": 30,
         "rewardAmount": "0.85",
         "keywords": "labeling, importance, highlighting, graphic, designs, images",
         "duration": 1200,
         "lifetime": 186400,
         "taskUrl": "https://cfosco.github.io/mturk-importance/",
-        "fold": "info50_text_0.txt",
-        "production": false
+        "fold": "natimgs35_0.txt",
+        "production": true
     },
 
     "advanced": {
