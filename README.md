@@ -2,7 +2,7 @@
 
 This is the repository for the ImportAnnots labeling tool. This tool can be used for multi-purpose content labeling on images. It has been primarily used for annotating importance on graphic designs (see O'Donovan et al., 2014 and Bylinskii et al., 2017).
 
-Examples of the interface running:
+Example of the interface running:
 
 ![Usage Gif](img/imp_labeling_gif_1.gif)
 
@@ -32,14 +32,14 @@ To test out the interface, you can simply go to https://cfosco.github.io/mturk-i
 
 
 ## Running it locally
-We have also configured this repository to work out of the box on a local server. To make it work locally (which could help to easily test new images), simply move to this repository's folder and start an http server:
+We have also configured this repository to work out of the box on a local server. To make it work locally (which could help to easily test new images), simply clone this repository, move to this repository's folder and start an http server:
 
 ```
 cd mturk-importance
 python -m http.server
 ```
 
-Go to localhost:YourPort (defined by the previous command), and you will be able to see the task. You won't be able to play unless you define a fold though. To utilize it, you need to pass 2 key parameters through the URL: the fold name that you want to use, and a dummy workerId (this field is normally populated by MTurk). In short, if you want to access fold1.txt, you would go to the following URL: https://localhost:YourPort/?fold="yourfold.txt"?workerId=""
+Go to localhost:YourPort (defined by the previous command), and you will be able to see the task. You won't be able to play, however, until you define what images you want to label. This is defined through a txt file located in files/ called fold. We have multiple available folds for testing purposes. To utilize it, you need to pass 2 key parameters through the URL: the fold name that you want to use, and a dummy workerId (this field is normally populated by MTurk). In short, if you want to access fold1.txt, you would go to the following URL: https://localhost:YourPort/?fold="fold1.txt"?workerId="".
 
 ## How can I use this on my own data?
 On the local side, loading new data is easy. The interface loads a set of images at every game defined by a txt file called fold. The fold is simply a set of links, one per line, to hosted images on the web. All folds must be located on the "files" folder of the project (examples can be seen there). To test the interface on a set of 10 new images, for example, one would build a txt file with 10 links of images on the web (one per line). Then, by accessing https://localhost:YourPort/?fold="yourfold.txt"?workerId="", The interface automatically parses the given fold and shows the 10 images requested.
@@ -47,7 +47,6 @@ On the local side, loading new data is easy. The interface loads a set of images
 If you plan to use this interface on Amazon Mechanical Turk, make sure to create a HIT as an iframe and link to a hosted version of this interface that you control (so that you can put new folds).
 
 ## Contents
-
 1. Base folder: Contains base images, config files and impdraw7.swf, the core flash application.
 2. assets: Contains required .css, .js and other dependencies.
 3. files: Folder containing txt files corresponding to folds. For the interface to load a fold, say fold1 (using ?fold=fold1.txt on the url), that fold must be present in this folder.
