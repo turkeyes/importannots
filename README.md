@@ -1,101 +1,55 @@
-# Generalized MTurk Task Template
-A general-purpose template for Amazon Mechanical Turk tasks.
+# ImportAnnots labeling tool
 
-### Development
-Run something like `python3 -m http.server` to test out the UI locally.
+This is the repository for the ImportAnnots labeling tool. This tool can be used for multi-purpose content labeling on images. It has been primarily used for annotating importance on graphic designs (see O'Donovan et al., 2014 and Bylinskii et al., 2017).
 
-Jupyter notebooks in the `mturk` folder are provided for launching and monitoring HITs. Edit the `hitCreation` fields in `config.json` to define how to set up your HITs.
+Examples of the interface running:
 
-### UI Customization
-This framework can be used to create MTurk HITs, broken up into discrete repeated subtasks.
+![Usage Gif](img/imp_labeling_gif_1.gif)
 
-To define your MTurk HIT, you only need to change things in three places: `index.js`, `custom.js`, and `config.json`. 
+## What can it do?
 
-#### `index.html`
-Find the section marked `<!-- vv CUSTOM EXPERIMENT MARKUP GOES HERE vv -->`, and add your custom HTML elements in that section (e.g. image divs, input boxes). Add `id`s to those HTML elements so you can easily refer to them with JQuery in the page's JavaScript (see `assets/js/custom.js`).
+The interface allows you to annotate a set of up to 24 images with 3 different highlighting tools:
+1. Stroke Fill (default):
+- (1) Click on the edge of the element you would like to trace around.
+- (2) While holding the mouse down, trace around the element until you reach your approximate starting point.
+- (3) A nice outline will be automatically created. If you are unsatisfied with it, you can click 'Undo'.
 
-#### `assets/js/custom.js`
-Fill out the 4 functions: `loadTasks`, `showTask`, `collectData`, and `validateTask`. These define behavior for loading initial data, displaying a task, storing data from a task, and validating a task. We recommmend starting by copying one of our template files: `assets/js/aggregate-template.js` if you have set `config.meta.aggregate=true` or `assets/js/no-aggregate-template.js` if you have set `config.meta.aggregate=false`. 
+2. Polygon Fill:
+- (1) Click on the Polygon Fill button on the right menu.
+- (2) Click on the edge of the element you want to annotate.
+- (3) Let go of the mouse and move it towards a new edge. A straight line between the starting point and your mouse position will be automatically created.
+- (3) Click again to generate a new point.
+- (4) Continue outlining the object until you reach your starting point, indicated by a blue circle. Clicking on the blue circle completes the annotation.
 
-#### `config.json`
-Here, you can define your HIT's name, description, number of subtasks, instructions, etc. Keep reading for a detailed description of the fields in the config. 
+3. Regular Fill (Brush):
+- (1) Click on the Regular Stroke button on the right menu.
+- (2) Pick a Brush Size (or go with the default).
+- (3) Paint over the whole image region you want to select as important.
+If possible, try to avoid this method, as it produces noisy boundaries.
 
-##### Metadata
+To test out the interface, you can simply go to https://cfosco.github.io/mturk-importance/?url=sentinel0.txt?assignmentId=%22%22, where a demo version is currently hosted.
 
-These fields are used to customize the UI template used for your task.
 
-* `meta.title` - the title of your task, displayed in the page title (string)
-* `meta.description` - a short overview of your task's purpose, displayed as bolded text right below the page title (string)
-* `meta.numSubtasks` - the number of subtasks your task will have (int)
-* `meta.disclaimer` - the experiment disclaimer text displayed at the bottom of the page (string)
-* `meta.aggregate` - whether inputs and outputs for the task should be divided up by subtasks, or the same inputs and outputs should be stored across all subtasks. If false, outputs will be stored in an array of length `numSubtasks`; otherwise, they will be merged a single object. In general, setting this to `false` will be better if subtasks are repetitive and self-contained (for example, labeling a series of images), and this to `true` will be better if the behavior of one subtask depends on input/output from another subtask (for instance, labeling an image in one subtask and writing a description of it in the next). 
 
-##### Instructions
+## Running it locally
+We have also configured this repository to work out of the box on a local server. To make it work locally (which could help to easily test new images), simply move to this repository's folder and start an http server:
 
-These fields populate the instructions for your task. 
+```
+cd mturk-importance
+python -m http.server
+```
 
-* `instructions.simple` - short instruction paragraph displayed below the task description. You can include HTML tags here! (string)
-* `instructions.steps` - an array of instruction strings, displayed as a bulleted list on the page. You can include HTML tags here! (array of strings)
-* `instructions.images` - an array of URLs for demo gifs on the instruction page. One of these will be displayed randomly on each page load. (array of strings)
+Go to localhost:YourPort (defined by the previous command), and you will be able to see the task. You won't be able to play unless you define a fold though. To utilize it, you need to pass 2 key parameters through the URL: the fold name that you want to use, and a dummy workerId (this field is normally populated by MTurk). In short, if you want to access fold1.txt, you would go to the following URL: https://localhost:YourPort/?fold="yourfold.txt"?workerId=""
 
-##### Hit Creation
+## How can I use this on my own data?
+On the local side, loading new data is easy. The interface loads a set of images at every game defined by a txt file called fold. The fold is simply a set of links, one per line, to hosted images on the web. All folds must be located on the "files" folder of the project (examples can be seen there). To test the interface on a set of 10 new images, for example, one would build a txt file with 10 links of images on the web (one per line). Then, by accessing https://localhost:YourPort/?fold="yourfold.txt"?workerId="", The interface automatically parses the given fold and shows the 10 images requested.
 
-These fields are used by the scripts in the `mturk` folder to define how your HIT(s) will appear on MTurk.
+If you plan to use this interface on Amazon Mechanical Turk, make sure to create a HIT as an iframe and link to a hosted version of this interface that you control (so that you can put new folds).
 
-* `hitCreation.title` - the HIT's title on the MTurk worker page (string)
-* `hitCreation.description` - the HIT's description on the MTurk worker page (string)
-* `hitCreation.rewardAmount` - amount to pay per HIT (string)
-* `hitCreation.keywords` - comma-separated tags (string)
-* `hitCreation.duration` - how long you want to give each worker to complete the task once started in seconds (int)
-* `hitCreation.lifetime` - how long you want the HIT on the worker site in seconds (int)
-* `hitCreation.taskUrl` - the URL where your MTurk task lives (string)
-* `hitCreation.production` - whether you want to use MTurk's production or sandbox environment (bool)
-* `hitCreation.numTasks` - how many duplicates of the HIT you want to create. Either this or `hitCreation.variants` must be specified. Overrides `hitCreation.variants`. (int)
-* `hitCreation.variants` - a list of dictionaries, where each dictionary represents a variant of your HIT. For each variant, the keys of the variant are merged with the rest of the keys in the `hitCreation` section of the config to create a full config object, and one task is generated to that specification, for a total of len(variants) tasks. For instance, you could use this to create 5 HITs where each one has a different querystring. Either this or `hitCreation.numTasks` must be specified; overriden by `hitCreation.numTasks`.
+## Contents
 
-##### Advanced
-
-These are advanced fields and features that will further customize your task.
-
-Config fields: 
-* `advanced.hideIfNotAccepted`: will automatically hide your HIT and show an error message if the user is viewing in an MTurk iFrame and has not yet accepted the task. The same behavior can be invoked manually from `custom.js` by calling `hideIfNotAccepted()`. (bool)
-* `advanced.includeDemographicSurvey` - setting this value to `true` automatically adds a demographic survey to the end of your task and collects/validates the data in it. 
-* `advanced.externalSubmit`: configure the task as an external link that submits data to an external source, instead of an MTurk iframe that submits data to the MTurk back-end (see the next section for details). Requires that `advanced.externalSubmitUrl` be set. (bool)
-* `advanced.externalSubmitUrl`: if `externalSubmit` is `true`, the url or the relative path of the route to poste the data to. It is expected that this route will accept the data via POST request and return an object containing a key `key` containing a validation code. (string)
-
-Features: 
-* use a queryword `skipto=<taskIndex>` to skip forward to the given `taskIndex`, for debugging purposes.
-
-### MTurk HIT configuration 
-
-This framework supports two different ways of configuring your hit. 
-
-#### MTurk iframe
-
-Set `config.advanced.externalSubmit` to `false`.
-
-Your task will be displayed as an iframe within MTurk and your data will be submitted to MTurk's own back-end and stored there. You can download your collected data directly from MTurk.
-
-Here is what your task will look like within the iframe: 
-
-![MTurk iframe](img/mturk_iframe.png)
-
-#### External link
-
-Set `config.advanced.externalSubmit` to `true`.
-
-On MTurk, your task appears as a link to your external website (specified by `config.hitCreation.taskUrl`) along with an input box for a confirmation code. MTurk workers navigate to your website and complete your task there. When they hit submit, their data is POSTed to `config.advanced.externalSubmitUrl`. This API is respnsible for returning a json object with a key called `key`. This will be displayed to the MTurk worker and they will input that key into the text box on MTurk as proof that they completed the task. You can download these keys from MTurk and use them to confirm that work was completed/approve the HITs.
-
-Here is what your task will look like within MTurk: 
-
-![external link](img/mturk_external_link.png)
-
-Here is what workers will see when they HIT submit and receive a validation code:
-
-![validation key](img/submit_code.png) 
-
-You are responsible for setting up your own data-collection infrastructure and issuing keys that you can use to confirm that workers completed the task.
-
-### Screenshots
-Here's a demo of the task interface:
-![demo](img/demo.gif)
+1. Base folder: Contains base images, config files and impdraw7.swf, the core flash application.
+2. assets: Contains required .css, .js and other dependencies.
+3. files: Folder containing txt files corresponding to folds. For the interface to load a fold, say fold1 (using ?fold=fold1.txt on the url), that fold must be present in this folder.
+4. img: Images shown in the instructional page of the task.
+5. jsons: Contains json for the sentinel images. Only used if sentinels detected in your fold.
