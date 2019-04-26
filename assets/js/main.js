@@ -203,6 +203,8 @@ function submitHIT() {
         }
     }
 
+    console.log('PAYLOAD:', payload)
+
     downloadAnswers(payload)
 
     // if (config.advanced.externalSubmit) {
@@ -421,10 +423,10 @@ function downloadAnswers(payload) {
     var dlAnchorElem = $('#user-answers');
     dlAnchorElem.attr("href", dataStr);
     dlAnchorElem.find("span").trigger("click");
-    // set up the button to print to the console when you click
 
+    // set up the button to print to the console when you click
     $("#print-answers-button").click(function() {
-        console.log("CodeChart outputs:", payload);
+        console.log("ImportAnnots outputs:", payload);
     });
 }
 
