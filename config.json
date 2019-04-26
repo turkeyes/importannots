@@ -35,6 +35,7 @@
         "includeDemographicSurvey": false,
         "hideIfNotAccepted": false,
         "externalSubmit": false,
-        "externalSubmitUrl": ""
+        "externalSubmitUrl": "",
+        "downloadDataOnSubmit": true
     }
 }

@@ -193,25 +193,30 @@ function submitHIT() {
     }
 
 
-    var payload = {
-        'assignmentId': state.assignmentId,
-        'workerId': state.workerId,
-        'origin': state.origin,
-        'results': {
-            'inputs': state.taskInputs,
-            'outputs': state.taskOutputs
-        }
+
+    if (config.advanced.downloadDataOnSubmit) {
+      var payload = {
+          'assignmentId': state.assignmentId,
+          'workerId': state.workerId,
+          'origin': state.origin,
+          'results': {
+              'inputs': state.taskInputs,
+              'outputs': state.taskOutputs
+          }
+      }
+
+      console.log('PAYLOAD:', payload)
+
+      downloadAnswers(payload)
+
+    } else {
+      if (config.advanced.externalSubmit) {
+          externalSubmit(submitUrl);
+      } else {
+          mturkSubmit(submitUrl);
+      }
     }
 
-    console.log('PAYLOAD:', payload)
-
-    downloadAnswers(payload)
-
-    // if (config.advanced.externalSubmit) {
-    //     externalSubmit(submitUrl);
-    // } else {
-    //     mturkSubmit(submitUrl);
-    // }
 }
 
 function cancelSubmit(err) {
