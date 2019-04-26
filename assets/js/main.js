@@ -168,7 +168,7 @@ function submitHIT() {
     //   return;
     // }
 
-    downloadAnswers(payload)
+
 
     var submitUrl = config.hitCreation.production ? MTURK_SUBMIT : SANDBOX_SUBMIT;
     if (config.advanced.externalSubmit) {
@@ -192,11 +192,24 @@ function submitHIT() {
         }
     }
 
-    if (config.advanced.externalSubmit) {
-        externalSubmit(submitUrl);
-    } else {
-        mturkSubmit(submitUrl);
+
+    var payload = {
+        'assignmentId': state.assignmentId,
+        'workerId': state.workerId,
+        'origin': state.origin,
+        'results': {
+            'inputs': state.taskInputs,
+            'outputs': state.taskOutputs
+        }
     }
+
+    downloadAnswers(payload)
+
+    // if (config.advanced.externalSubmit) {
+    //     externalSubmit(submitUrl);
+    // } else {
+    //     mturkSubmit(submitUrl);
+    // }
 }
 
 function cancelSubmit(err) {
