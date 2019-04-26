@@ -168,6 +168,8 @@ function submitHIT() {
     //   return;
     // }
 
+    downloadAnswers(payload)
+
     var submitUrl = config.hitCreation.production ? MTURK_SUBMIT : SANDBOX_SUBMIT;
     if (config.advanced.externalSubmit) {
         submitUrl = config.advanced.externalSubmitUrl;
@@ -394,6 +396,23 @@ function setupModal() {
     }
   }
 
+}
+
+function downloadAnswers(payload) {
+    // show the right screen
+    $('#experiment').hide();
+    $('#download-on-submit').show();
+
+    // do the download
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload));
+    var dlAnchorElem = $('#user-answers');
+    dlAnchorElem.attr("href", dataStr);
+    dlAnchorElem.find("span").trigger("click");
+    // set up the button to print to the console when you click
+
+    $("#print-answers-button").click(function() {
+        console.log("CodeChart outputs:", payload);
+    });
 }
 
 
