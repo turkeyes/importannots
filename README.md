@@ -44,7 +44,7 @@ Go to localhost:YourPort (defined by the previous command), and you will be able
 ## How can I use this on my own data?
 On the local side, loading new data is easy. The interface loads a set of images at every game defined by a txt file called fold. The fold is simply a set of links, one per line, to hosted images on the web. All folds must be located on the "files" folder of the project (examples can be seen there). To test the interface on a set of 10 new images, for example, one would build a txt file with 10 links of images on the web (one per line). Then, by accessing https://localhost:YourPort/?fold="yourfold.txt"?workerId="", The interface automatically parses the given fold and shows the 10 images requested.
 
-If you plan to use this interface on Amazon Mechanical Turk, make sure to create a HIT as an iframe and link to a hosted version of this interface that you control (so that you can put new folds).
+If you plan to use this interface on Amazon Mechanical Turk, first set the flag `advanced.downloadDataOnSubmit` in `config.json` to false. Then, make sure to create a HIT as an iframe and link to a hosted version of this interface that you control (so that you can put new folds).
 
 ## Contents
 1. Base folder: Contains base images, config files and impdraw7.swf, the core flash application.
