@@ -35,7 +35,7 @@ To test out the interface, you can simply go to https://cfosco.github.io/mturk-i
 We have also configured this repository to work out of the box on a local server. To make it work locally (which could help to easily test new images), simply clone this repository, move to this repository's folder and start an http server:
 
 ```
-cd mturk-importance
+cd importannots
 python -m http.server
 ```
 

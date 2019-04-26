@@ -59,7 +59,7 @@ var custom = {
                   {
                       var text = rawFile.responseText;
                       var allLines = text.split(/\r\n|\n/);
-                      console.log('USING FOLD:', gup('úrl'))
+                      console.log('USING FOLD:', gup('url'))
                       console.log(allLines)
                       num_imgs_to_label = allLines.length
                       if (num_imgs_to_label > 24) {
