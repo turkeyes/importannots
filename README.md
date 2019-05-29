@@ -27,7 +27,7 @@ The interface allows you to annotate a set of up to 24 images with 3 different h
 - (3) Paint over the whole image region you want to select as important.
 If possible, try to avoid this method, as it produces noisy boundaries.
 
-To test out the interface, you can simply go to https://cfosco.github.io/mturk-importance/?url=sentinel0.txt?assignmentId=%22%22, where a demo version is currently hosted.
+To test out the interface, you can simply go to https://turkeyes.github.io/importannots/?url=fold_main_posters_0.txt?assignmentId='', where a demo version is currently hosted.
 
 
 
@@ -39,10 +39,10 @@ cd importannots
 python -m http.server
 ```
 
-Go to localhost:YourPort (defined by the previous command), and you will be able to see the task. You won't be able to play, however, until you define what images you want to label. This is defined through a txt file located in files/ called fold. We have multiple available folds for testing purposes. To utilize it, you need to pass 2 key parameters through the URL: the fold name that you want to use, and a dummy workerId (this field is normally populated by MTurk). In short, if you want to access fold1.txt, you would go to the following URL: https://localhost:YourPort/?url=fold1.txt?assignmentId="".
+Go to localhost:YourPort (defined by the previous command), and you will be able to see the task. You won't be able to play, however, until you define what images you want to label. This is defined through a txt file located in files/ called fold. We have multiple available folds for testing purposes. To utilize it, you need to pass 2 key parameters through the URL: the fold name that you want to use, and a dummy workerId (this field is normally populated by MTurk). In short, if you want to access fold1.txt, you would go to the following URL: https://localhost:YourPort/?url=fold_main_posters_0.txt?assignmentId=''.
 
 ## How can I use this on my own data?
-On the local side, loading new data is easy. The interface loads a set of images at every game defined by a txt file called fold. The fold is simply a set of links, one per line, to hosted images on the web. All folds must be located on the "files" folder of the project (examples can be seen there). To test the interface on a set of 10 new images, for example, one would build a txt file with 10 links of images on the web (one per line). Then, by accessing https://localhost:YourPort/?fold="yourfold.txt"?workerId="", The interface automatically parses the given fold and shows the 10 images requested.
+On the local side, loading new data is easy. The interface loads a set of images at every game defined by a txt file called fold. The fold is simply a set of links, one per line, to hosted images on the web. All folds must be located on the "files" folder of the project (examples can be seen there). To test the interface on a set of 10 new images, for example, one would build a txt file with 10 links of images on the web (one per line). Then, by accessing https://localhost:YourPort/?fold="yourfold.txt"?assignmentId='', The interface automatically parses the given fold and shows the 10 images requested.
 
 If you plan to use this interface on Amazon Mechanical Turk, first set the flag `advanced.downloadDataOnSubmit` in `config.json` to false. Then, make sure to create a HIT as an iframe and link to a hosted version of this interface that you control (so that you can put new folds).
 
