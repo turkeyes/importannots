@@ -26,8 +26,8 @@
         "keywords": "labeling, importance, highlighting, graphic, designs, images",
         "duration": 1200,
         "lifetime": 186400,
-        "taskUrl": "https://cfosco.github.io/mturk-importance/",
-        "fold": "natimgs35_0.txt",
+        "taskUrl": "https://turkeyes.github.io/importannots/",
+        "fold": "fold_main_posters_0.txt",
         "production": false
     },
 
@@ -36,6 +36,6 @@
         "hideIfNotAccepted": false,
         "externalSubmit": false,
         "externalSubmitUrl": "",
-        "downloadDataOnSubmit": true
+        "downloadDataOnSubmit": false
     }
 }
