@@ -54,4 +54,4 @@ If you plan to use this interface on Amazon Mechanical Turk, first set the flag 
 5. jsons: Contains json for the sentinel images. Only used if sentinels detected in your fold.
 
 ## Credits
-This code is a combination of Kimberli Zhong's [MTurk template](https://github.com/kimberli/mturk-template) and Peter O'Donovan's [Importance annotation UI](http://www.cs.toronto.edu/~donovan/mturk/test/drawgdimp.shtml?url=input-gd_t1_3.txt&assignmentId=asdf). This code was packaged together into its current form by Camilo Fosco and Anelise Newman, with guidance from Zoya Bylinskii and Nam Wook Kim.
+This code is a combination of (1) Kimberli Zhong's [MTurk template](https://github.com/kimberli/mturk-template), with [improvements and modifications](https://github.com/a-newman/mturk-template) by Anelise Newman, and (2) Peter O'Donovan's [Importance annotation UI](http://www.cs.toronto.edu/~donovan/mturk/test/drawgdimp.shtml?url=input-gd_t1_3.txt&assignmentId=asdf). This code was packaged together into its current form by [Camilo Fosco](https://github.com/cfosco), with guidance from [Zoya Bylinskii](https://github.com/cvzoya/) and [Nam Wook Kim](https://github.com/namwkim).
