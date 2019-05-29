@@ -27,7 +27,7 @@
         "duration": 1200,
         "lifetime": 186400,
         "taskUrl": "https://turkeyes.github.io/importannots/",
-        "fold": "fold_main_posters_0.txt",
+        "fold": "sentinel_short.txt",
         "production": false
     },
 
