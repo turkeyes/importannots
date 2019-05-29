@@ -27,7 +27,7 @@ The interface allows you to annotate a set of up to 24 images with 3 different h
 - (3) Paint over the whole image region you want to select as important.
 If possible, try to avoid this method, as it produces noisy boundaries.
 
-To test out the interface, you can simply go to https://turkeyes.github.io/importannots/?url=fold_main_posters_0.txt?assignmentId='', where a demo version is currently hosted.
+To test out the interface, you can simply go to https://turkeyes.github.io/importannots/?url=fold_main_posters_0.txt?assignmentId=%27%27, where a demo version is currently hosted.
 
 
 
