@@ -52,3 +52,6 @@ If you plan to use this interface on Amazon Mechanical Turk, first set the flag 
 3. files: Folder containing txt files corresponding to folds. For the interface to load a fold, say fold1 (using ?fold=fold1.txt on the url), that fold must be present in this folder.
 4. img: Images shown in the instructional page of the task.
 5. jsons: Contains json for the sentinel images. Only used if sentinels detected in your fold.
+
+## Credits
+This code is a combination of Kimberli Zhong's [MTurk template](https://github.com/kimberli/mturk-template) and Peter O'Donovan's [Importance annotation UI](http://www.cs.toronto.edu/~donovan/mturk/test/drawgdimp.shtml?url=input-gd_t1_3.txt&assignmentId=asdf). This code was packaged together into its current form by Camilo Fosco and Anelise Newman, with guidance from Zoya Bylinskii and Nam Wook Kim.
