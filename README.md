@@ -55,3 +55,9 @@ If you plan to use this interface on Amazon Mechanical Turk, first set the flag 
 
 ## Credits
 This code is a combination of (1) Kimberli Zhong's [MTurk template](https://github.com/kimberli/mturk-template), with [improvements and modifications](https://github.com/a-newman/mturk-template) by Anelise Newman, and (2) Peter O'Donovan's [Importance annotation UI](http://www.cs.toronto.edu/~donovan/mturk/test/drawgdimp.shtml?url=input-gd_t1_3.txt&assignmentId=asdf). This code was packaged together into its current form by [Camilo Fosco](https://github.com/cfosco), with guidance from [Zoya Bylinskii](https://github.com/cvzoya/) and [Nam Wook Kim](https://github.com/namwkim).
+
+If you use this code, please consider citing:
+
+> Newman, A., McNamara, B., Fosco, C., Zhang, Y.B., Sukhum, P., Tancik, M., Kim, N.W., Bylinskii, Z. [TurkEyes: A Web-Based Toolbox for Crowdsourcing Attention Data.](http://turkeyes.mit.edu/) In ACM CHI, 2020.
+
+> O'Donovan, P., Agarwala, A., Hertzmann, A. [Learning Layouts for Single-Page Graphic Designs](http://www.dgp.toronto.edu/~donovan/layout/index.html) In TVCG, 2014.
